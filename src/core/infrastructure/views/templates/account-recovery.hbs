@@ -1,0 +1,100 @@
+<style>
+    form {
+        width: 400px;
+        height: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        border: 2px solid aliceblue;
+        border-radius: 4px;
+
+
+        background-color: #545454;
+        gap: 20px;
+
+
+        .animated-image {
+            width: 90px;
+            height: 90px;
+            /* Ajusta el tamaño de la imagen */
+            animation: rotateX 2s infinite alternate ease-in-out;
+        }
+
+
+
+        input {
+            width: 90%;
+            height: 40px;
+            border-radius: 6px;
+            outline: none;
+            border: 0;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #333;
+            font-size: 18px;
+        }
+
+        label {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.1rem;
+            color: rgb(167, 167, 168);
+            text-transform: uppercase;
+        }
+
+        button {
+            width: 40%;
+            height: 32px;
+            border: none;
+            border-radius: 4px;
+            background: rgb(52, 99, 165);
+            color: aliceblue;
+            transition: .3s ease all;
+            font-family: Arial, Helvetica, sans-serif;
+
+            &:hover {
+                cursor: pointer;
+                background-color: rgb(52, 110, 191);
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    @keyframes rotateX {
+        0% {
+            transform: rotateY(0deg);
+        }
+
+        50% {
+            transform: rotateY(75deg);
+        }
+
+        100% {
+            transform: rotateY(-45deg);
+        }
+    }
+</style>
+
+
+<form autocomplete="off">
+
+    <img src="/static/assets/logo_devnica.png" alt="logodevnica" class="animated-image">
+
+    <input type="hidden" id="_token" value="{{token}}">
+    <input type="hidden" id="_csrf" id="_csrf" value="{{csrfToken}}">
+
+    <label for="_emailCode">Email Code</label>
+    <input type="text" name="emailCode" id="_emailCode" placeholder="Digite codigo recibido por correo" minlength="3"
+        required autocomplete="off">
+
+    <label for="_phoneCode">Phone Code</label>
+    <input type="text" name="phoneCode" id="_phoneCode" placeholder="Digite codigo rcibido por SMS" minlength="3"
+        required autocomplete="off">
+
+
+    <button type="button" id="accountRecoveryBtn">Recuperar Cuenta</button>
+</form>
+
+<script src="/static/js/account-recovery.js" nonce="{{nonce}}"></script>
+

@@ -1,0 +1,16 @@
+import { UpdateCategoryController } from '@app/application/controllers/category/upd-category.controller'
+import { UpdateCategoryUseCase } from '@app/application/usecases/category/upd-category.usecase'
+import { type CategoryRaw } from '@app/domain/entities/category.entity'
+import { itemCategoryRepositoryImpl } from '@app/infrastructure/repositories/item-category.repository'
+import { type ControllerPort } from '@core/application/ports/controller.port'
+import { SuccessRequestPresenter } from '@core/application/presenters/success-request.presenter'
+
+function factory(): ControllerPort {
+    const usecase = new UpdateCategoryUseCase(itemCategoryRepositoryImpl)
+
+    const presenter = new SuccessRequestPresenter<CategoryRaw>()
+
+    return new UpdateCategoryController(usecase, presenter)
+}
+
+export const updateCategoryFactory = factory()

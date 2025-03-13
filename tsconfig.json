@@ -1,0 +1,34 @@
+{
+    "compilerOptions": {
+      "target": "ES2022",
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "module": "commonjs",
+      "rootDir": "./",
+      "baseUrl": ".",
+      "sourceMap": true,
+      "inlineSources": true,
+      "skipDefaultLibCheck": true,
+      "paths": {
+        "@types/*": ["src/types/*"],
+        "@core/*": ["src/core/*"],
+        "@app/*": ["src/app/*"]
+      },
+      "types": ["node"],
+      // "typeRoots": ["./src/types", "./node_modules/@types"], //optional
+      "resolveJsonModule": true,
+      "declaration": true,
+      "outDir": "build",
+      "noEmitOnError": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": true,
+      "strictPropertyInitialization": false,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true,
+      "skipLibCheck": true
+    },
+    "exclude": ["node_modules", "build", "**/*.spec.ts"]
+  }
