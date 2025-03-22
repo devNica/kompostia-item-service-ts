@@ -3,7 +3,7 @@ import { type CategoryRaw } from '@app/domain/entities/category.entity'
 import { type KomposeInterfaces } from '@devnica/kompostia-models-ts'
 import { type CtgItemDTO } from '../usecases/catalog-item.usecase.port'
 
-export interface ItemCategoryRepositoryI {
+export interface ItemCategoryRepositoryPort {
     skuExists: (data: Pick<CtgItemDTO, 'sku'>) => Promise<boolean>
     fetchByParams: (
         data: QueryParams

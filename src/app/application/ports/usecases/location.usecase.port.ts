@@ -12,19 +12,19 @@ export type CreateStorageLocationDTO = Omit<
     'locationId' | 'type'
 >
 
-export interface CreateStorageLocationI {
+export interface CreateStorageLocationPort {
     run: (data: CreateStorageLocationDTO) => Promise<StorageLocationRaw>
 }
 
-export interface ListStorageLocationsI {
+export interface ListStorageLocationsPort {
     run: (data: QueryParams) => Promise<StorageLocationRaw[]>
 }
 
-export interface GetLocationAncestorsI {
+export interface GetLocationAncestorsPort {
     run: (locationId: string) => Promise<NestedLocationRaw>
 }
 
-export interface UpdateStorageLocationI {
+export interface UpdateStorageLocationPort {
     run: (
         data: UpdateStorageLocationDTO,
         locationId: string

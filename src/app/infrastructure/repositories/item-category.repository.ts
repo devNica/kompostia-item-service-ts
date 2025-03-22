@@ -1,4 +1,4 @@
-import { type ItemCategoryRepositoryI } from '@app/application/ports/repositories/item-category.repository'
+import { type ItemCategoryRepositoryPort } from '@app/application/ports/repositories/item-category.repository'
 import { type CtgItemDTO } from '@app/application/ports/usecases/catalog-item.usecase.port'
 import { type CategoryRaw } from '@app/domain/entities/category.entity'
 import { type QueryParams } from '@core/application/models/app/app.model'
@@ -8,7 +8,7 @@ import { getDatabaseCrendential } from '@core/shared/configs/db-credentials'
 import { KomposeConn, KomposeInterfaces, KomposeModels, KomposeQueries } from '@devnica/kompostia-models-ts'
 import { QueryTypes, type Sequelize } from 'sequelize'
 
-class ItemCategoryRepository implements ItemCategoryRepositoryI {
+class ItemCategoryRepository implements ItemCategoryRepositoryPort {
     private readonly sequelize: Sequelize
     private readonly schema: string
 

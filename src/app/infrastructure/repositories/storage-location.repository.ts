@@ -1,4 +1,4 @@
-import { type StorageLocationRepositoryI } from '@app/application/ports/repositories/product-location.repository'
+import { type StorageLocationRepositoryPort } from '@app/application/ports/repositories/product-location.repository'
 import {
     type LocationTypeRaw,
     type StorageLocationRaw,
@@ -12,7 +12,7 @@ import { KomposeConn, KomposeInterfaces, KomposeModels, KomposeQueries } from '@
 
 import { DatabaseError, QueryTypes, type Sequelize } from 'sequelize'
 
-class StorageLocationRepository implements StorageLocationRepositoryI {
+class StorageLocationRepository implements StorageLocationRepositoryPort {
     private readonly sequelize: Sequelize
     private readonly schema: string
 

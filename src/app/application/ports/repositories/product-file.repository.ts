@@ -1,5 +1,5 @@
 import { type ProductImgRaw } from '@app/domain/entities/product-img.entity'
 
-export interface ProductFileRepositoryI {
+export interface ProductFileRepositoryPort {
     getImageById: (fileId: string) => Promise<ProductImgRaw>
 }

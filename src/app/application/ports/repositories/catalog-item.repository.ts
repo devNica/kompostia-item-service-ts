@@ -19,7 +19,7 @@ export interface ImageMetaDataI {
     filesize: number
 }
 
-export interface CatalogItemRepositoryI {
+export interface CatalogItemRepositoryport {
     save: (
         product: Omit<CtgItemRaw, 'brand'> & {
             brand: Required<ItemBrandRaw>

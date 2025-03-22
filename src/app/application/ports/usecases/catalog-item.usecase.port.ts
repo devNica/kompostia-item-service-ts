@@ -37,18 +37,18 @@ export type CreateCatalogItemtDTO = Omit<
     'itemId' | 'createdAt' | 'isActive'
 >
 
-export interface CreateCtgItemI {
+export interface CreateCtgItemPort {
     run: (data: CreateCatalogItemtDTO, adj: FileModel[]) => Promise<void>
 }
 
-export interface GetCtgItemI {
+export interface GetCtgItemPort {
     run: (
         data: Pick<CtgItemDTO, 'itemId'>,
         baseURL: string
     ) => Promise<CtgItemRaw>
 }
 
-export interface UpdateCtgItemBrandI {
+export interface UpdateCtgItemBrandPort {
     run: (data: UpdCtgItemBrandDTO) => Promise<CtgItemRaw>
 }
 
@@ -60,7 +60,7 @@ export interface DownloadCtgImageI {
     run: (data: { fileId: string }) => Promise<CtgItemImageDTO>
 }
 
-export interface UpdateCtgItemCategoryI {
+export interface UpdateCtgItemCategoryPort {
     run: (
         data: Pick<CtgItemDTO, 'category'> & { itemId: string }
     ) => Promise<CtgItemRaw>

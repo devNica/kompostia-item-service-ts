@@ -1,5 +1,5 @@
 import {
-    type CatalogItemRepositoryI,
+    type CatalogItemRepositoryport,
     type CtgItemFoundI,
 } from '@app/application/ports/repositories/catalog-item.repository'
 import { type ProductImgRaw } from '@app/domain/entities/product-img.entity'
@@ -23,7 +23,7 @@ import { type CtgItemRaw } from '@app/domain/aggregates/catalog-item.aggregate'
 import { RepositoryErrorPresenter } from '@core/application/presenters/repository-error.presenter'
 import { type ItemBrandRaw } from '@app/domain/entities/item-brand.entity'
 
-class CatalogItemRepository implements CatalogItemRepositoryI {
+class CatalogItemRepository implements CatalogItemRepositoryport {
     private readonly sequelize: Sequelize
     private transaction: Transaction
     private readonly schema: string

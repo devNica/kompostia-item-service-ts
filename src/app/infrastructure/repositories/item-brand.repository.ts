@@ -1,4 +1,4 @@
-import { type ItemBrandRepositoryI } from '@app/application/ports/repositories/item-brand.repository'
+import { type ItemBrandRepositoryPort } from '@app/application/ports/repositories/item-brand.repository'
 import {
     type ItemBrandProps,
     type ItemBrandRaw,
@@ -10,7 +10,7 @@ import { getDatabaseCrendential } from '@core/shared/configs/db-credentials'
 import { KomposeConn, KomposeInterfaces, KomposeModels } from '@devnica/kompostia-models-ts'
 import { type Sequelize, Op } from 'sequelize'
 
-class ItemBrandRepository implements ItemBrandRepositoryI {
+class ItemBrandRepository implements ItemBrandRepositoryPort {
     private readonly sequelize: Sequelize
     private readonly schema: string
 

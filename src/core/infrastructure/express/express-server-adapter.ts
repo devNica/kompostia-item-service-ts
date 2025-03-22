@@ -6,14 +6,16 @@ import { type Server } from 'http'
 import { expressTemplateEngine } from './config/express-template-engine'
 import { expressSetupSecurity } from './config/express-setup-security'
 import { type LoggerPort } from '@core/application/ports/logger.port'
+import { type SecureContextOptions } from 'tls'
+import { catalogItemRouter } from '@app/presentation/catalog-item.endpoints'
+import { fileRouter } from '@app/presentation/file.routes'
+import { storageLocationRouter } from '@app/presentation/location.routes'
+import { brandRouter } from '@app/presentation/brand.routes'
+import { categoryRouter } from '@app/presentation/category.routes'
 import express, { type Application } from 'express'
 import https from 'https'
 import cors from 'cors'
 import fs from 'fs'
-import { type SecureContextOptions } from 'tls'
-import { catalogItemRouter } from '@app/presentation/catalog-item.endpoints'
-import { fileRouter } from '@app/presentation/file.endpoint'
-import { propsRouter } from '@app/presentation/props.endpoints'
 
 export class ExpressServerAdapter {
     private readonly controllers: EndPointModel[] = []
@@ -59,8 +61,18 @@ export class ExpressServerAdapter {
         })
 
         this.controllers.push({
-            path: `/${this.prefix}/props`,
-            controller: propsRouter,
+            path: `/${this.prefix}/locations`,
+            controller: storageLocationRouter,
+        })
+
+        this.controllers.push({
+            path: `/${this.prefix}/brands`,
+            controller: brandRouter,
+        })
+
+        this.controllers.push({
+            path: `/${this.prefix}/categories`,
+            controller: categoryRouter,
         })
     }
 

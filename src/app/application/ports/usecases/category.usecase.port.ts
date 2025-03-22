@@ -5,18 +5,18 @@ import {
 import { type NestedCategoryRaw } from '@app/domain/entities/nested-category.entity'
 import { type QueryParams } from '@core/application/models/app/app.model'
 
-export interface CreateCategoryI {
+export interface CreateCategoryPort {
     run: (data: CategoryProps) => Promise<CategoryRaw>
 }
 
-export interface UpdateCategoryI {
+export interface UpdateCategoryPort {
     run: (data: CategoryProps, categoryId: string) => Promise<CategoryRaw>
 }
 
-export interface ListCategoriesI {
+export interface ListCategoriesPort {
     run: (data: QueryParams) => Promise<CategoryRaw[]>
 }
 
-export interface GetCategoryAncestorsI {
+export interface GetCategoryAncestorsPort {
     run: (categoryId: string) => Promise<NestedCategoryRaw>
 }
