@@ -6,13 +6,16 @@ import {
 import { type UpdateBrandInformationPort } from '../../ports/usecases/item-brand.usecase.port'
 import { type ItemBrandRepositoryPort } from '../../ports/repositories/item-brand.repository'
 
-export class UpdateBrandInformationUseCase implements UpdateBrandInformationPort {
+export class UpdateBrandInformationUseCase
+    implements UpdateBrandInformationPort
+{
     constructor(private readonly repository: ItemBrandRepositoryPort) {}
 
     async run(data: ItemBrandProps, brandId: string): Promise<ItemBrandRaw> {
         const brandsEntity = ItemBrandEntity.new({
             brandId,
-            ...data,
+            brandName: data.brandName,
+            isActive: data.isActive
         })
 
         const brands = brandsEntity.getAllProps()

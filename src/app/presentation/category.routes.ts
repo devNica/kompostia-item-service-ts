@@ -20,7 +20,4 @@ categoryRouter.get(
 categoryRouter.post('/', expressRouteAdapter(createCategoryFactory))
 
 // actualizar categoria
-categoryRouter.put(
-    '/:categoryId',
-    expressRouteAdapter(updateCategoryFactory)
-)
+categoryRouter.put('/:categoryId', expressRouteAdapter(updateCategoryFactory))

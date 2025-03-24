@@ -8,7 +8,12 @@ import { type DatabaseCredentialModel } from '@core/application/models/db/databa
 import { ConflictErrorPresenter } from '@core/application/presenters/conflict-error-presenter'
 import { RepositoryErrorPresenter } from '@core/application/presenters/repository-error.presenter'
 import { getDatabaseCrendential } from '@core/shared/configs/db-credentials'
-import { KomposeConn, KomposeInterfaces, KomposeModels, KomposeQueries } from '@devnica/kompostia-models-ts'
+import {
+    KomposeConn,
+    type KomposeSchemas,
+    KomposeModels,
+    KomposeQueries,
+} from '@devnica/kompostia-models-ts'
 
 import { DatabaseError, QueryTypes, type Sequelize } from 'sequelize'
 
@@ -30,12 +35,12 @@ class StorageLocationRepository implements StorageLocationRepositoryPort {
 
     async fetchByParams(
         data: QueryParams
-    ): Promise<KomposeInterfaces.StorageLocationStructureRawI[]> {
+    ): Promise<KomposeSchemas.StorageLocationRawQuerySchema[]> {
         const query = `'${data.value}'` || "''"
         try {
             const locationsFound =
-                await this.sequelize.query<KomposeInterfaces.StorageLocationStructureRawI>(
-                    KomposeQueries.registeredLocationsQuery(this.schema, query),
+                await this.sequelize.query<KomposeSchemas.StorageLocationRawQuerySchema>(
+                    KomposeQueries.registeredLocationsSQL(this.schema, query),
                     {
                         type: QueryTypes.SELECT,
                     }
@@ -82,7 +87,7 @@ class StorageLocationRepository implements StorageLocationRepositoryPort {
         }
     }
 
-    async fetchById(locationTypeId: string): Promise<LocationTypeRaw> {
+    async fetchLocationTypeyId(locationTypeId: string): Promise<LocationTypeRaw> {
         try {
             const result =
                 await KomposeModels.LocationTypeModel.findByPk(locationTypeId)
@@ -111,6 +116,7 @@ class StorageLocationRepository implements StorageLocationRepositoryPort {
         data: Omit<StorageLocationRaw, 'locationId'> & { locationId: string }
     ): Promise<void> {
         try {
+
             await KomposeModels.StorageLocationModel.update(
                 {
                     locationName: data.locationName,
@@ -137,11 +143,11 @@ class StorageLocationRepository implements StorageLocationRepositoryPort {
 
     async fetchAncestorsById(
         locationId: string
-    ): Promise<KomposeInterfaces.StorageLocationStructureRawI[]> {
+    ): Promise<KomposeSchemas.StorageLocationRawQuerySchema[]> {
         try {
             const result =
-                await this.sequelize.query<KomposeInterfaces.StorageLocationStructureRawI>(
-                    KomposeQueries.nestedLocationStructureQuery(this.schema),
+                await this.sequelize.query<KomposeSchemas.StorageLocationRawQuerySchema>(
+                    KomposeQueries.hierarchicalLocationRelationshipSQL(this.schema),
                     {
                         replacements: {
                             locationId,

@@ -1,6 +1,6 @@
 export interface CategoryNodeProps {
     categoryId?: string
-    name: string // nombre del almacen
+    categoryName: string // nombre del almacen
     nomeclature: string // codigo de referencia
     path?: CategoryNodeProps | undefined
 }
@@ -21,7 +21,7 @@ export class ChildNodeCategoryVO {
     getAllProps(): CategoryNodeProps {
         return {
             categoryId: this.props.categoryId,
-            name: this.props.name,
+            categoryName: this.props.categoryName,
             nomeclature: this.props.nomeclature,
             path: this.props.path,
         }

@@ -1,11 +1,13 @@
 import { type Request } from 'express'
 
+export type GenericReqObject = Record<string, unknown>
+
 export interface HttpRequestModel<
-    Body = any,
-    Params = any,
-    Query = any,
+    Body = GenericReqObject,
+    Params = GenericReqObject,
+    Query = GenericReqObject,
     Files = Request['file'] | Request['files'],
-    Headers = any,
+    Headers = GenericReqObject,
     Data = Record<string, string> & {
         baseURL: string
         userId?: string | number

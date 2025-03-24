@@ -27,6 +27,7 @@ export class CategoryEntity extends BaseEntity<CategoryProps> {
     }
 
     static create(data: CategoryRaw): CategoryEntity {
+
         const categoryId = new UniqueIdentificatorVO(data.categoryId)
 
         if (data.multiLangIsActive && data.multiLangCategory.length < 1) {

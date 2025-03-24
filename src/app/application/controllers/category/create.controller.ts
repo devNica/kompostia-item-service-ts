@@ -1,23 +1,25 @@
 import { type ControllerPort } from '@core/application/ports/controller.port'
 import { type CreateCategoryPort } from '../../ports/usecases/category.usecase.port'
 import { type PresenterPort } from '@core/application/ports/presenter.port'
-import {
-    type HttpRequestModel,
-    type HttpResponseModel,
-} from '@core/application/models/http/http'
+import { type HttpResponseModel } from '@core/application/models/http/http'
 import { RequestValidationErrorPresenter } from '@core/application/presenters/request-validation.presenter'
 import { hasRequiredKey } from '@core/shared/utils/validator'
-import { type CategoryRaw } from '@app/domain/entities/category.entity'
+import {
+    type CategoryProps,
+    type CategoryRaw,
+} from '@app/domain/entities/category.entity'
 
-export class CreateCategoryController implements ControllerPort<CategoryRaw> {
+export class CreateCategoryController
+    implements ControllerPort<CategoryRaw, { body: CategoryProps }>
+{
     constructor(
         private readonly usecase: CreateCategoryPort,
         private readonly presenter: PresenterPort<CategoryRaw>
     ) {}
 
-    async handleRequest(
-        request: HttpRequestModel<any>
-    ): Promise<HttpResponseModel<CategoryRaw>> {
+    async handleRequest(request: {
+        body: CategoryProps
+    }): Promise<HttpResponseModel<CategoryRaw>> {
         if (!hasRequiredKey(request, 'body')) {
             throw new RequestValidationErrorPresenter()
         }

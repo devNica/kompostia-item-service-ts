@@ -44,7 +44,7 @@ export class NestedLocationEntity extends BaseEntity<NestedLocationProps> {
         const address = getObjetcKeyPath(data.path, this.searchKey)
 
         // Obtener el Id de la referencia ultima de la ubicacion del producto
-        const [locationId] = findDeepestId(data.path)
+        const [locationId] = findDeepestId(data.path, { filterKey: "locationId", depth: 0 })
 
         return new NestedLocationEntity(
             {

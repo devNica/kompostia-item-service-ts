@@ -7,7 +7,7 @@ import { type CatalogItemRepositoryport } from '../../ports/repositories/catalog
 import {
     mapCategoryTreeToAggregateProps,
     mapLocationTreeToAggregateProps,
-} from '../../services/mappers/product-props.map'
+} from '../../services/mappers/shared-mapper'
 import {
     CtgItemAggregateRoot,
     type CtgItemRaw,
@@ -20,7 +20,8 @@ export class UpdateCatalogItemCategoryUseCase
     constructor(private readonly repository: CatalogItemRepositoryport) {}
 
     async run(
-        data: Pick<CtgItemDTO, 'category'> & { itemId: string }
+        data: Pick<CtgItemDTO, 'category'>,
+        itemId: string
     ): Promise<CtgItemRaw> {
         const ctg = NestedCategoryEntity.new(data.category)
 
@@ -28,10 +29,10 @@ export class UpdateCatalogItemCategoryUseCase
 
         await this.repository.updateCtgItemCategoryById({
             categoryId: category.categoryId,
-            itemId: data.itemId,
+            itemId,
         })
 
-        const product = await this.repository.fetchById(data.itemId)
+        const product = await this.repository.fetchById(itemId)
 
         const categoryNested = mapCategoryTreeToAggregateProps(
             product.categoryRaw

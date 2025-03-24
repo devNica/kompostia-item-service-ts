@@ -21,10 +21,7 @@ export interface CtgItemDTO {
     isActive: boolean
 }
 
-export interface UpdCtgItemBrandDTO {
-    brand: Required<Omit<ItemBrandRaw, 'isActive'>>
-    itemId: string
-}
+export type UpdCtgItemBrandDTO = Required<Omit<ItemBrandRaw, 'isActive'>>
 
 export interface CtgItemImageDTO {
     binary: Buffer
@@ -49,7 +46,14 @@ export interface GetCtgItemPort {
 }
 
 export interface UpdateCtgItemBrandPort {
-    run: (data: UpdCtgItemBrandDTO) => Promise<CtgItemRaw>
+    run: (data: UpdCtgItemBrandDTO, itemId: string) => Promise<CtgItemRaw>
+}
+
+export interface UpdateCtgItemCategoryPort {
+    run: (
+        data: Pick<CtgItemDTO, 'category'>,
+        itemId: string
+    ) => Promise<CtgItemRaw>
 }
 
 export interface VerifyProductSKUI {
@@ -58,10 +62,4 @@ export interface VerifyProductSKUI {
 
 export interface DownloadCtgImageI {
     run: (data: { fileId: string }) => Promise<CtgItemImageDTO>
-}
-
-export interface UpdateCtgItemCategoryPort {
-    run: (
-        data: Pick<CtgItemDTO, 'category'> & { itemId: string }
-    ) => Promise<CtgItemRaw>
 }

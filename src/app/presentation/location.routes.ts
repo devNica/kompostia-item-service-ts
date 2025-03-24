@@ -25,5 +25,3 @@ storageLocationRouter.put(
     '/:locationId',
     expressRouteAdapter(updateStorageLocationFactory)
 )
-
-

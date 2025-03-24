@@ -5,7 +5,12 @@ import { type QueryParams } from '@core/application/models/app/app.model'
 import { type DatabaseCredentialModel } from '@core/application/models/db/database-credential.model'
 import { RepositoryErrorPresenter } from '@core/application/presenters/repository-error.presenter'
 import { getDatabaseCrendential } from '@core/shared/configs/db-credentials'
-import { KomposeConn, KomposeInterfaces, KomposeModels, KomposeQueries } from '@devnica/kompostia-models-ts'
+import {
+    KomposeConn,
+    type KomposeSchemas,
+    KomposeModels,
+    KomposeQueries,
+} from '@devnica/kompostia-models-ts'
 import { QueryTypes, type Sequelize } from 'sequelize'
 
 class ItemCategoryRepository implements ItemCategoryRepositoryPort {
@@ -77,11 +82,11 @@ class ItemCategoryRepository implements ItemCategoryRepositoryPort {
 
     async fetchAncestorsById(
         categoryId: string
-    ): Promise<KomposeInterfaces.CategoryStructureRawI[]> {
+    ): Promise<KomposeSchemas.CategoryRawQuerySchema[]> {
         try {
             const result =
-                await this.sequelize.query<KomposeInterfaces.CategoryStructureRawI>(
-                    KomposeQueries.nestedCategoryStructureQuery(this.schema),
+                await this.sequelize.query<KomposeSchemas.CategoryRawQuerySchema>(
+                    KomposeQueries.hierarchicalCategoryRelationshipSQL(this.schema),
                     {
                         replacements: {
                             categoryId,
@@ -106,12 +111,15 @@ class ItemCategoryRepository implements ItemCategoryRepositoryPort {
 
     async fetchByParams(
         data: QueryParams
-    ): Promise<KomposeInterfaces.CategoryStructureRawI[]> {
+    ): Promise<KomposeSchemas.CategoryRawQuerySchema[]> {
         const query = `'${data.value}'` || "''"
         try {
             const categoriesFound =
-                await this.sequelize.query<KomposeInterfaces.CategoryStructureRawI>(
-                    KomposeQueries.registeredCategoriesQuery(this.schema, query),
+                await this.sequelize.query<KomposeSchemas.CategoryRawQuerySchema>(
+                    KomposeQueries.registeredCategoriesSQL(
+                        this.schema,
+                        query
+                    ),
                     {
                         type: QueryTypes.SELECT,
                     }

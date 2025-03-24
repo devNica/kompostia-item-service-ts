@@ -5,24 +5,27 @@ import {
     type CreateStorageLocationPort,
 } from '../../ports/usecases/location.usecase.port'
 import { type PresenterPort } from '@core/application/ports/presenter.port'
-import {
-    type HttpRequestModel,
-    type HttpResponseModel,
-} from '@core/application/models/http/http'
+import { type HttpResponseModel } from '@core/application/models/http/http'
 import { hasRequiredKey } from '@core/shared/utils/validator'
 import { RequestValidationErrorPresenter } from '@core/application/presenters/request-validation.presenter'
 
 export class CreateStorageLocationController
-    implements ControllerPort<StorageLocationRaw>
+    implements
+        ControllerPort<
+            StorageLocationRaw,
+            {
+                body: CreateStorageLocationDTO
+            }
+        >
 {
     constructor(
         private readonly usecase: CreateStorageLocationPort,
         private readonly presenter: PresenterPort<StorageLocationRaw>
     ) {}
 
-    async handleRequest(
-        request: HttpRequestModel<any>
-    ): Promise<HttpResponseModel<CreateStorageLocationDTO>> {
+    async handleRequest(request: {
+        body: CreateStorageLocationDTO
+    }): Promise<HttpResponseModel<CreateStorageLocationDTO>> {
         if (!hasRequiredKey(request, 'body')) {
             throw new RequestValidationErrorPresenter()
         }

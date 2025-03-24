@@ -7,7 +7,7 @@ export default {
 
     NODE_ENV: EnvConfig.NODE_ENV ?? 'development',
 
-    PREFIX: 'gnosys/api/v1',
+    PREFIX: 'kompostia/srv/v1',
 
     SYSTEM_CURRENCY: EnvConfig.SYSTEM_CURRENCY ?? 'USD',
 

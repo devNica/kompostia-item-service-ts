@@ -3,9 +3,9 @@ import { UniqueIdentificatorVO } from '@core/domain/value-objects/unique-identif
 
 export interface LocationNodeProps {
     locationId?: string
-    name: string // nombre del almacen
+    locationName: string // nombre del almacen
     nomeclature: string
-    ref: string // ref == parentId
+    parentId: string // ref == parentId
     type: string
     path?: LocationNodeProps | undefined
 }
@@ -36,9 +36,9 @@ export class ChildNodeLocationVO extends BaseEntity<LocationNodeProps> {
     getAllProps(): LocationNodeProps {
         return {
             locationId: this.props.locationId,
-            name: this.props.name,
+            locationName: this.props.locationName,
             nomeclature: this.props.nomeclature,
-            ref: this.props.ref,
+            parentId: this.props.parentId,
             type: this.props.type,
             path: this.props.path,
         }

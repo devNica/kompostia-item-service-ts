@@ -1,25 +1,33 @@
-import { type ItemBrandRaw } from '@app/domain/entities/item-brand.entity'
+import {
+    type ItemBrandProps,
+    type ItemBrandRaw,
+} from '@app/domain/entities/item-brand.entity'
 import { type ControllerPort } from '@core/application/ports/controller.port'
 import { type UpdateBrandInformationPort } from '../../ports/usecases/item-brand.usecase.port'
 import { type PresenterPort } from '@core/application/ports/presenter.port'
-import {
-    type HttpRequestModel,
-    type HttpResponseModel,
-} from '@core/application/models/http/http'
+import { type HttpResponseModel } from '@core/application/models/http/http'
 import { hasRequiredKey } from '@core/shared/utils/validator'
 import { RequestValidationErrorPresenter } from '@core/application/presenters/request-validation.presenter'
 
 export class UpdateBrandInformationController
-    implements ControllerPort<ItemBrandRaw>
+    implements
+        ControllerPort<
+            ItemBrandRaw,
+            {
+                body: ItemBrandProps
+                params: { brandId: string }
+            }
+        >
 {
     constructor(
         private readonly usecase: UpdateBrandInformationPort,
         private readonly presenter: PresenterPort<ItemBrandRaw>
     ) {}
 
-    async handleRequest(
-        request: HttpRequestModel<any>
-    ): Promise<HttpResponseModel<ItemBrandRaw>> {
+    async handleRequest(request: {
+        body: ItemBrandProps
+        params: { brandId: string }
+    }): Promise<HttpResponseModel<ItemBrandRaw>> {
         if (!hasRequiredKey(request, 'params')) {
             throw new RequestValidationErrorPresenter()
         }

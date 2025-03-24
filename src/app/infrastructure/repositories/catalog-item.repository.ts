@@ -7,7 +7,12 @@ import { type DatabaseCredentialModel } from '@core/application/models/db/databa
 import { ConflictErrorPresenter } from '@core/application/presenters/conflict-error-presenter'
 import { RequestValidationErrorPresenter } from '@core/application/presenters/request-validation.presenter'
 import { getDatabaseCrendential } from '@core/shared/configs/db-credentials'
-import { KomposeConn, KomposeInterfaces, KomposeModels, KomposeQueries } from '@devnica/kompostia-models-ts'
+import {
+    KomposeConn,
+    type KomposeSchemas,
+    KomposeModels,
+    KomposeQueries,
+} from '@devnica/kompostia-models-ts'
 import {
     DatabaseError,
     QueryError,
@@ -91,49 +96,59 @@ class CatalogItemRepository implements CatalogItemRepositoryport {
     async fetchById(productId: string): Promise<CtgItemFoundI> {
         try {
             const productRaw: Omit<
-                KomposeInterfaces.CatalogItemI,
+                KomposeSchemas.CatalogItemSchema,
                 'brandId' | 'qualityId' | 'supplierId'
-            > | null = await KomposeModels.CatalogItemModel.findByPk(productId, {
-                attributes: { exclude: ['qualityId', 'brandId', 'supplierId'] },
+            > | null = await KomposeModels.CatalogItemModel.findByPk(
+                productId,
+                {
+                    attributes: {
+                        exclude: ['qualityId', 'brandId', 'supplierId'],
+                    },
 
-                include: [
-                    {
-                        model: KomposeModels.ItemBrandModel,
-                        as: KomposeModels.ModelRelationshipAliases.itemBrand,
-                        attributes: [
-                            ['id', 'brandId'],
-                            ['brand_name', 'brandName'],
-                        ],
-                    },
-                    {
-                        model: KomposeModels.SupplierModel,
-                        as: KomposeModels.ModelRelationshipAliases.itemSupplier,
-                        attributes: [
-                            ['id', 'supplierId'],
-                            ['supplier_code', 'supplierCode'],
-                            ['supplier_name', 'supplierName'],
-                        ],
-                    },
-                    {
-                        model: KomposeModels.ItemHasLocationModel,
-                        as: 'productLocation',
-                    },
-                ],
-            })
+                    include: [
+                        {
+                            model: KomposeModels.ItemBrandModel,
+                            as: KomposeModels.ModelRelationshipAliases
+                                .itemBrand,
+                            attributes: [
+                                ['id', 'brandId'],
+                                ['brand_name', 'brandName'],
+                            ],
+                        },
+                        {
+                            model: KomposeModels.SupplierModel,
+                            as: KomposeModels.ModelRelationshipAliases
+                                .itemSupplier,
+                            attributes: [
+                                ['id', 'supplierId'],
+                                ['supplier_code', 'supplierCode'],
+                                ['supplier_name', 'supplierName'],
+                            ],
+                        },
+                        {
+                            model: KomposeModels.ItemHasLocationModel,
+                            as: 'productLocation',
+                        },
+                    ],
+                }
+            )
 
             if (!productRaw) throw new Error('producto no encontrado')
 
             const product = unwrapData(productRaw)
 
-            let locationRaw: KomposeInterfaces.StorageLocationStructureRawI[] = []
+            let locationRaw: KomposeSchemas.StorageLocationRawQuerySchema[] =
+                []
 
             if (
                 product?.productLocation &&
                 product.productLocation.length > 0
             ) {
                 locationRaw =
-                    await this.sequelize.query<KomposeInterfaces.StorageLocationStructureRawI>(
-                        KomposeQueries.nestedLocationStructureQuery(this.schema),
+                    await this.sequelize.query<KomposeSchemas.StorageLocationRawQuerySchema>(
+                        KomposeQueries.hierarchicalLocationRelationshipSQL(
+                            this.schema
+                        ),
                         {
                             replacements: {
                                 locationId:
@@ -145,8 +160,8 @@ class CatalogItemRepository implements CatalogItemRepositoryport {
             }
 
             const categoryRaw =
-                await this.sequelize.query<KomposeInterfaces.CategoryStructureRawI>(
-                    KomposeQueries.nestedCategoryStructureQuery(this.schema),
+                await this.sequelize.query<KomposeSchemas.CategoryRawQuerySchema>(
+                    KomposeQueries.hierarchicalCategoryRelationshipSQL(this.schema),
                     {
                         replacements: {
                             categoryId: product?.categoryId,
@@ -156,8 +171,8 @@ class CatalogItemRepository implements CatalogItemRepositoryport {
                 )
 
             const imgMetaData = await this.sequelize.query<
-                Omit<KomposeInterfaces.FileI, 'binary'>
-            >(KomposeQueries.getProductImagesMetaDataQuery(this.schema), {
+                Omit<KomposeSchemas.FileSchema, 'binary'>
+            >(KomposeQueries.getProductImagesMetadataSQL(this.schema), {
                 replacements: {
                     productId: product?.id,
                 },
@@ -200,7 +215,7 @@ class CatalogItemRepository implements CatalogItemRepositoryport {
         },
         images?: ProductImgRaw[]
     ): Promise<{ productId: string }> {
-        let product: KomposeInterfaces.CatalogItemI
+        let product: KomposeSchemas.CatalogItemSchema
 
         try {
             // Inicializar la transaccion

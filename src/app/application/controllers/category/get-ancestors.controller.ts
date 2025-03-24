@@ -10,16 +10,17 @@ import { type NestedCategoryRaw } from '@app/domain/entities/nested-category.ent
 import { type GetCategoryAncestorsPort } from '../../ports/usecases/category.usecase.port'
 
 export class GetCategoriesAncestorsController
-    implements ControllerPort<NestedCategoryRaw>
+    implements
+        ControllerPort<NestedCategoryRaw, { params: { categoryId: string } }>
 {
     constructor(
         private readonly usecase: GetCategoryAncestorsPort,
         private readonly presenter: PresenterPort<NestedCategoryRaw>
     ) {}
 
-    async handleRequest(
-        request: HttpRequestModel<any>
-    ): Promise<HttpResponseModel<NestedCategoryRaw>> {
+    async handleRequest(request: {
+        params: { categoryId: string }
+    }): Promise<HttpResponseModel<NestedCategoryRaw>> {
         if (!hasRequiredKey(request, 'params')) {
             throw new RequestValidationErrorPresenter()
         }

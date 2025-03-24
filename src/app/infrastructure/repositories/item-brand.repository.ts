@@ -7,7 +7,11 @@ import { type QueryParams } from '@core/application/models/app/app.model'
 import { type DatabaseCredentialModel } from '@core/application/models/db/database-credential.model'
 import { RepositoryErrorPresenter } from '@core/application/presenters/repository-error.presenter'
 import { getDatabaseCrendential } from '@core/shared/configs/db-credentials'
-import { KomposeConn, KomposeInterfaces, KomposeModels } from '@devnica/kompostia-models-ts'
+import {
+    KomposeConn,
+    type KomposeSchemas,
+    KomposeModels,
+} from '@devnica/kompostia-models-ts'
 import { type Sequelize, Op } from 'sequelize'
 
 class ItemBrandRepository implements ItemBrandRepositoryPort {
@@ -48,7 +52,9 @@ class ItemBrandRepository implements ItemBrandRepositoryPort {
         }
     }
 
-    async fetchByParams(data: QueryParams): Promise<KomposeInterfaces.ItemBrandI[]> {
+    async fetchByParams(
+        data: QueryParams
+    ): Promise<KomposeSchemas.ItemBrandSchema[]> {
         try {
             const result = await KomposeModels.ItemBrandModel.findAll({
                 where: {
@@ -56,7 +62,7 @@ class ItemBrandRepository implements ItemBrandRepositoryPort {
                         brandName: {
                             [Op.iLike]: `%${data.value}%`, // Búsqueda case-insensitive
                         },
-                        isActive: true,
+                        // isActive: true,
                     },
                 },
             })
@@ -72,7 +78,7 @@ class ItemBrandRepository implements ItemBrandRepositoryPort {
 
     async save(
         data: ItemBrandProps
-    ): Promise<Omit<KomposeInterfaces.ItemBrandI, 'createdAt' | 'updatedAt'>> {
+    ): Promise<Omit<KomposeSchemas.ItemBrandSchema, 'createdAt' | 'updatedAt'>> {
         try {
             const brand = await KomposeModels.ItemBrandModel.create({
                 brandName: data.brandName,

@@ -2,12 +2,12 @@ import { DomainErrorPresenter } from '@core/application/presenters/domain-error.
 import { BaseEntity } from '@core/domain/entities/base.entity'
 import { UniqueIdentificatorVO } from '@core/domain/value-objects/unique-identificator.vo'
 import { hasRequiredKey } from '@core/shared/utils/validator'
-import { type Interfaces } from '@devnica/kompostia-db-pkg'
+import { KomposeSchemas } from '@devnica/kompostia-models-ts'
 
 export interface LocationTypeRaw {
     locationTypeId: string
     name: string
-    rules: Interfaces.SuggestedLocationsI[]
+    rules: KomposeSchemas.SuggestedLocationsI[]
 }
 
 export interface Rules {
@@ -21,7 +21,7 @@ export interface StorageLocationProps {
     parentId: string | null
     parentName?: string | null
     locationTypeId: string
-    type?: Interfaces.SuggestedLocationsI // tipo de ubicacion
+    type?: KomposeSchemas.SuggestedLocationsI // tipo de ubicacion
     hasAccounting: boolean
     isActive?: boolean
 }
@@ -37,7 +37,7 @@ export type StorageLocationRaw = Omit<
 export class StorageLocationEntity extends BaseEntity<StorageLocationProps> {
     private _persistedId: boolean = false
 
-    private static readonly typeLocationsAllowed: Interfaces.SuggestedLocationsI[] =
+    private static readonly typeLocationsAllowed: KomposeSchemas.SuggestedLocationsI[] =
         [
             'hubs',
             'warehouse',
@@ -85,7 +85,7 @@ export class StorageLocationEntity extends BaseEntity<StorageLocationProps> {
             {
                 ...data,
                 type: hasRequiredKey(data, 'type')
-                    ? (data.type as Interfaces.SuggestedLocationsI)
+                    ? (data.type as KomposeSchemas.SuggestedLocationsI)
                     : undefined,
             },
             locationId
@@ -138,7 +138,7 @@ export class StorageLocationEntity extends BaseEntity<StorageLocationProps> {
             {
                 ...data,
                 type: hasRequiredKey(data, 'type')
-                    ? (data.type as Interfaces.SuggestedLocationsI)
+                    ? (data.type as KomposeSchemas.SuggestedLocationsI)
                     : undefined,
             },
             locationId

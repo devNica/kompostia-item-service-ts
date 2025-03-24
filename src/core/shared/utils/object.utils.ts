@@ -20,7 +20,8 @@ export function getObjetcKeyPath(obj: any, searchKey: string): string {
     return values.join('|')
 }
 
-export function findDeepestId(obj: any, depth = 0): [string, number] {
+
+export function findDeepestId(obj: any, {filterKey='id', depth=0}: {filterKey: string; depth: number}): [string, number] {
     if (typeof obj !== 'object' || obj === null) {
         return ['', -1] // Profundidad -1 para evitar contar valores no válidos
     }
@@ -29,12 +30,12 @@ export function findDeepestId(obj: any, depth = 0): [string, number] {
     let maxDepth = depth
 
     for (const key of Object.keys(obj)) {
-        if (key.toLowerCase().includes('id') && typeof obj[key] === 'string') {
+        if (key.toLowerCase().includes(filterKey.toLowerCase()) && typeof obj[key] === 'string') {
             deepestId = obj[key]
             maxDepth = depth
         }
 
-        const [nestedId, nestedDepth] = findDeepestId(obj[key], depth + 1)
+        const [nestedId, nestedDepth] = findDeepestId(obj[key], { filterKey, depth: depth+1 })
 
         if (nestedDepth > maxDepth) {
             deepestId = nestedId

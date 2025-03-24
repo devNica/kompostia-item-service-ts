@@ -8,10 +8,12 @@ import {
     type GetCtgItemPort,
 } from '../../ports/usecases/catalog-item.usecase.port'
 import {
-    mapCategoryTreeToAggregateProps,
+
+    mapFromRawCategoriesToNode,
+    mapFromRawLocationToNode,
     mapImageMetadataToURL,
-    mapLocationTreeToAggregateProps,
-} from '../../services/mappers/product-props.map'
+    
+} from '../../services/mappers/shared-mapper'
 import { type LocationNodeProps } from '@app/domain/value-objects/child-node-location.vo'
 
 export class GetCatalogItemUseCase implements GetCtgItemPort {
@@ -23,14 +25,14 @@ export class GetCatalogItemUseCase implements GetCtgItemPort {
     ): Promise<CtgItemRaw> {
         const itemFound = await this.repository.fetchById(data.itemId)
 
-        const nestedCategories = mapCategoryTreeToAggregateProps(
+        const nestedCategories = mapFromRawCategoriesToNode(
             itemFound.categoryRaw
         )
 
         let nestedLocations: LocationNodeProps | null = null
 
         if (itemFound.locationRaw.length > 0) {
-            nestedLocations = mapLocationTreeToAggregateProps(
+            nestedLocations = mapFromRawLocationToNode(
                 itemFound.locationRaw
             )
         }

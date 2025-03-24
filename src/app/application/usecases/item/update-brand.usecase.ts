@@ -10,19 +10,19 @@ import {
 import {
     mapCategoryTreeToAggregateProps,
     mapLocationTreeToAggregateProps,
-} from '../../services/mappers/product-props.map'
+} from '../../services/mappers/shared-mapper'
 import { type LocationNodeProps } from '@app/domain/value-objects/child-node-location.vo'
 
 export class UpdateCatalogItemBrandUseCase implements UpdateCtgItemBrandPort {
     constructor(private readonly repository: CatalogItemRepositoryport) {}
 
-    async run(data: UpdCtgItemBrandDTO): Promise<CtgItemRaw> {
+    async run(data: UpdCtgItemBrandDTO, itemId: string): Promise<CtgItemRaw> {
         await this.repository.updateCtgItemBrandById({
-            brandId: data.brand.brandId,
-            itemId: data.itemId,
+            brandId: data.brandId,
+            itemId,
         })
 
-        const product = await this.repository.fetchById(data.itemId)
+        const product = await this.repository.fetchById(itemId)
 
         const nestedCategories = mapCategoryTreeToAggregateProps(
             product.categoryRaw
