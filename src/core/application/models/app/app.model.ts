@@ -11,3 +11,6 @@ export interface MultiLangI {
 export interface QueryParams {
     value: string
 }
+
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+    Partial<Record<K, T[K]>>

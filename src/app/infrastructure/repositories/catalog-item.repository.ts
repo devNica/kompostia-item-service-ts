@@ -26,7 +26,7 @@ import { InternalServerErrorPresenter } from '@core/application/presenters/inter
 import { unwrapData } from '@core/shared/utils/object.utils'
 import { type CtgItemRaw } from '@app/domain/aggregates/catalog-item.aggregate'
 import { RepositoryErrorPresenter } from '@core/application/presenters/repository-error.presenter'
-import { type ItemBrandRaw } from '@app/domain/entities/item-brand.entity'
+import { type ItemBrandRaw } from '@app/domain/entities/brand.entity'
 
 class CatalogItemRepository implements CatalogItemRepositoryport {
     private readonly sequelize: Sequelize

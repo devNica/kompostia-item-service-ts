@@ -1,13 +1,13 @@
 import { type ImageMetaDataI } from '@app/application/ports/repositories/catalog-item.repository'
-import { type CategoryNodeProps } from '@app/domain/value-objects/child-node-category.vo'
+import { type CategoryNodeProps } from '@app/domain/value-objects/category-node.vo'
 import { type LinkProps } from '@app/domain/value-objects/link.vo'
 import constants from '@core/shared/constants'
 import { type KomposeSchemas } from '@devnica/kompostia-models-ts'
-import { type LocationNodeProps } from '@app/domain/value-objects/storage-location-node.vo'
+import { type StorageLocationNodeProps } from '@app/domain/value-objects/storage-location-node.vo'
 
 export function mapFromRawLocationToNode(
     data: KomposeSchemas.StorageLocationRawQuerySchema[]
-): LocationNodeProps {
+): StorageLocationNodeProps {
     return data.reduce((acc: any, loc) => {
         return {
             locationId: loc.id,

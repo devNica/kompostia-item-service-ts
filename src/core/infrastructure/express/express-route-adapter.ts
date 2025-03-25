@@ -4,7 +4,7 @@ import { getServerBaseURL } from '@core/shared/utils/server.util'
 import { type NextFunction, type Request, type Response } from 'express'
 import { csrfSecurity } from '../csrf/csr.adapter'
 
-export function expressRouteAdapter<T>(controller: ControllerPort<T>) {
+export function expressRouteAdapter<T, S>(controller: ControllerPort<T>) {
     return async (request: Request, response: Response, next: NextFunction) => {
         try {
             const ctrl = await controller.handleRequest({

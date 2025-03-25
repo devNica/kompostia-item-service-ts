@@ -1,6 +1,6 @@
 import { type ProductImgRaw } from '@app/domain/entities/product-img.entity'
 import { type CtgItemRaw } from '@app/domain/aggregates/catalog-item.aggregate'
-import { type ItemBrandRaw } from '@app/domain/entities/item-brand.entity'
+import { type ItemBrandRaw } from '@app/domain/entities/brand.entity'
 import { type KomposeSchemas } from '@devnica/kompostia-models-ts'
 
 export type CtgItemFoundI = Omit<

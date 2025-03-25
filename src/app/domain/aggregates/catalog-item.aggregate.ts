@@ -3,7 +3,7 @@ import { type LinkProps, LinkVO } from '../value-objects/link.vo'
 import { DateVO } from '../value-objects/date.vo'
 import {
     LocationLinkedListEntity,
-    LocationLinkedListRaw,
+    type LocationLinkedListRaw,
 } from '../entities/location-linked-list.entity'
 import { UniqueIdentificatorVO } from '@core/domain/value-objects/unique-identificator.vo'
 import { hasRequiredKey } from '@core/shared/utils/validator'
@@ -11,13 +11,10 @@ import { SupplierEntity, type SupplierProps } from '../entities/supplier.entity'
 import { SKUVO } from '../value-objects/sku.vo'
 import { MaskVO } from '../value-objects/mask.vo'
 import {
-    NestedCategoryEntity,
-    type NestedCategoryRaw,
-} from '../entities/nested-category.entity'
-import {
-    ItemBrandEntity,
-    type ItemBrandRaw,
-} from '../entities/item-brand.entity'
+    CategoryLinkedListEntity,
+    type CategoryLinkedListRaw,
+} from '../entities/category-linked-list.entity'
+import { ItemBrandEntity, type ItemBrandRaw } from '../entities/brand.entity'
 
 export interface CtgItemProps {
     itemName: string
@@ -29,7 +26,7 @@ export interface CtgItemProps {
     supplierProductCode: string
     supplier: SupplierEntity
     brand: ItemBrandEntity
-    category: NestedCategoryEntity
+    category: CategoryLinkedListEntity
     urls?: LinkVO[] // product url images
     location?: LocationLinkedListEntity
     createdAt: DateVO // fecha de creacion del articulo
@@ -52,7 +49,7 @@ export type CtgItemRaw = Omit<
     mask: string
     brand: ItemBrandRaw
     supplier: SupplierProps
-    category: NestedCategoryRaw
+    category: CategoryLinkedListRaw
     location?: LocationLinkedListRaw
 
     createdAt: number
@@ -80,7 +77,7 @@ export class CtgItemAggregateRoot extends BaseEntity<CtgItemProps> {
         }
 
         const supplier = SupplierEntity.new(data.supplier)
-        const category = NestedCategoryEntity.new(data.category)
+        const category = CategoryLinkedListEntity.new(data.category)
         const mask = MaskVO.create(data.mask)
         const sku = SKUVO.create(mask, data.sku)
         const brand = ItemBrandEntity.new(data.brand)

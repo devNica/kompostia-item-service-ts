@@ -6,12 +6,7 @@ import { storageLocationRepositoryImpl } from '@app/infrastructure/repositories/
 import { type ControllerPort } from '@core/application/ports/controller.port'
 import { SuccessRequestPresenter } from '@core/application/presenters/success-request.presenter'
 
-function factory(): ControllerPort<
-    StorageLocationRaw,
-    {
-        body: CreateStorageLocationDTO
-    }
-> {
+function factory(): ControllerPort {
     const usecase = new CreateStorageLocationUseCase(
         storageLocationRepositoryImpl
     )

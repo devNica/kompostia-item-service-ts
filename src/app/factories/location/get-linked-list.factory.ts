@@ -5,10 +5,7 @@ import { storageLocationRepositoryImpl } from '@app/infrastructure/repositories/
 import { type ControllerPort } from '@core/application/ports/controller.port'
 import { SuccessRequestPresenter } from '@core/application/presenters/success-request.presenter'
 
-function factory(): ControllerPort<
-    LocationLinkedListRaw,
-    { params: { locationId: string } }
-> {
+function factory(): ControllerPort {
     const usecase = new GetLocationLinkedListUseCase(
         storageLocationRepositoryImpl
     )

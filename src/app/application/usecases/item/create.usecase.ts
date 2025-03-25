@@ -9,7 +9,7 @@ import {
 } from '@app/domain/aggregates/catalog-item.aggregate'
 import { type FileModel } from '@core/application/models/files/file.model'
 import { ProductImgMappingService } from '@app/domain/mappers/product-img.service'
-import { type ItemBrandRaw } from '@app/domain/entities/item-brand.entity'
+import { type ItemBrandRaw } from '@app/domain/entities/brand.entity'
 
 export class CreateCatalogItemUseCase implements CreateCtgItemPort {
     constructor(private readonly repository: CatalogItemRepositoryport) {}

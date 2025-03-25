@@ -5,7 +5,7 @@ export interface StorageLocationNodeProps {
     locationId?: string
     locationName: string
     nomeclature: string
-    parentId: string 
+    parentId: string
     type: string
     path?: StorageLocationNodeProps | undefined
 }

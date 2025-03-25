@@ -5,39 +5,33 @@ import {
     type UpdateStorageLocationPort,
 } from '../../ports/usecases/location.usecase.port'
 import { type PresenterPort } from '@core/application/ports/presenter.port'
-import { type HttpResponseModel } from '@core/application/models/http/http'
+import {
+    type HttpRequestModel,
+    type HttpResponseModel,
+} from '@core/application/models/http/http'
 import { RequestValidationErrorPresenter } from '@core/application/presenters/request-validation.presenter'
-import { hasRequiredKey } from '@core/shared/utils/validator'
 
 export class UpdateStorageLocationController
-    implements
-        ControllerPort<
-            StorageLocationRaw,
-            {
-                body: UpdateStorageLocationDTO
-                params: { locationId: string }
-            }
-        >
+    implements ControllerPort<StorageLocationRaw>
 {
     constructor(
         private readonly usecase: UpdateStorageLocationPort,
         private readonly presenter: PresenterPort<StorageLocationRaw>
     ) {}
 
-    async handleRequest(request: {
-        body: UpdateStorageLocationDTO
-        params: { locationId: string }
-    }): Promise<HttpResponseModel<UpdateStorageLocationDTO>> {
-        if (!hasRequiredKey(request, 'params')) {
+    async handleRequest(
+        request: Pick<HttpRequestModel, 'body' | 'params'>
+    ): Promise<HttpResponseModel<UpdateStorageLocationDTO>> {
+        if (!request.params) {
             throw new RequestValidationErrorPresenter()
         }
 
-        if (!hasRequiredKey(request, 'body')) {
+        if (!request.body) {
             throw new RequestValidationErrorPresenter()
         }
 
         const result = await this.usecase.run(
-            request.body,
+            request.body as UpdateStorageLocationDTO,
             request.params.locationId
         )
 

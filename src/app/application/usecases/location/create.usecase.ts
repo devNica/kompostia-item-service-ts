@@ -19,7 +19,9 @@ export class CreateStorageLocationUseCase implements CreateStorageLocationPort {
             parentRules = await this.repository.fetchByParentId(data.parentId)
         }
 
-        const childRules = await this.repository.fetchLocationTypeyId(data.locationTypeId)
+        const childRules = await this.repository.fetchLocationTypeyId(
+            data.locationTypeId
+        )
 
         const lct = StorageLocationEntity.create(
             {

@@ -5,14 +5,14 @@ export interface CategoryNodeProps {
     path?: CategoryNodeProps | undefined
 }
 
-export class ChildNodeCategoryVO {
+export class CategoryNodeVO {
     private constructor(private readonly props: CategoryNodeProps) {}
 
-    static create(data: CategoryNodeProps): ChildNodeCategoryVO {
+    static create(data: CategoryNodeProps): CategoryNodeVO {
         // Validar y clonar childrens (manteniendo la estructura simple)
         const childrens = data.path ? { ...data.path } : undefined
 
-        return new ChildNodeCategoryVO({
+        return new CategoryNodeVO({
             ...data,
             path: childrens,
         })

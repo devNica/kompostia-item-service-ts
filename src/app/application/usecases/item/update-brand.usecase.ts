@@ -8,10 +8,10 @@ import {
     type UpdCtgItemBrandDTO,
 } from '../../ports/usecases/catalog-item.usecase.port'
 import {
-    mapCategoryTreeToAggregateProps,
-    mapLocationTreeToAggregateProps,
+    mapFromRawCategoriesToNode,
+    mapFromRawLocationToNode,
 } from '../../services/mappers/shared-mapper'
-import { type LocationNodeProps } from '@app/domain/value-objects/storage-location-node.vo'
+import { type StorageLocationNodeProps } from '@app/domain/value-objects/storage-location-node.vo'
 
 export class UpdateCatalogItemBrandUseCase implements UpdateCtgItemBrandPort {
     constructor(private readonly repository: CatalogItemRepositoryport) {}
@@ -24,16 +24,12 @@ export class UpdateCatalogItemBrandUseCase implements UpdateCtgItemBrandPort {
 
         const product = await this.repository.fetchById(itemId)
 
-        const nestedCategories = mapCategoryTreeToAggregateProps(
-            product.categoryRaw
-        )
+        const nestedCategories = mapFromRawCategoriesToNode(product.categoryRaw)
 
-        let nestedLocations: LocationNodeProps | null = null
+        let nestedLocations: StorageLocationNodeProps | null = null
 
         if (product.locationRaw.length > 0) {
-            nestedLocations = mapLocationTreeToAggregateProps(
-                product.locationRaw
-            )
+            nestedLocations = mapFromRawLocationToNode(product.locationRaw)
         }
 
         const po = CtgItemAggregateRoot.fromRawData({

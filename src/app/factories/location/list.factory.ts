@@ -2,16 +2,10 @@ import { ListStorageLocationsController } from '@app/application/controllers/loc
 import { ListStorageLocationsUseCase } from '@app/application/usecases/location/list.usecase'
 import { type StorageLocationRaw } from '@app/domain/entities/storage-location.entity'
 import { storageLocationRepositoryImpl } from '@app/infrastructure/repositories/storage-location.repository'
-import { type QueryParams } from '@core/application/models/app/app.model'
 import { type ControllerPort } from '@core/application/ports/controller.port'
 import { SuccessRequestPresenter } from '@core/application/presenters/success-request.presenter'
 
-function factory(): ControllerPort<
-    StorageLocationRaw[],
-    {
-        query: QueryParams
-    }
-> {
+function factory(): ControllerPort {
     const usecase = new ListStorageLocationsUseCase(
         storageLocationRepositoryImpl
     )

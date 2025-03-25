@@ -12,7 +12,7 @@ import {
     mapFromRawLocationToNode,
     mapImageMetadataToURL,
 } from '../../services/mappers/shared-mapper'
-import { type LocationNodeProps } from '@app/domain/value-objects/storage-location-node.vo'
+import { type StorageLocationNodeProps } from '@app/domain/value-objects/storage-location-node.vo'
 
 export class GetCatalogItemUseCase implements GetCtgItemPort {
     constructor(private readonly repository: CatalogItemRepositoryport) {}
@@ -27,7 +27,7 @@ export class GetCatalogItemUseCase implements GetCtgItemPort {
             itemFound.categoryRaw
         )
 
-        let nestedLocations: LocationNodeProps | null = null
+        let nestedLocations: StorageLocationNodeProps | null = null
 
         if (itemFound.locationRaw.length > 0) {
             nestedLocations = mapFromRawLocationToNode(itemFound.locationRaw)

@@ -3,12 +3,12 @@ import { type CategoryRaw } from '@app/domain/entities/category.entity'
 import { type KomposeSchemas } from '@devnica/kompostia-models-ts'
 import { type CtgItemDTO } from '../usecases/catalog-item.usecase.port'
 
-export interface ItemCategoryRepositoryPort {
+export interface CategoryRepositoryPort {
     skuExists: (data: Pick<CtgItemDTO, 'sku'>) => Promise<boolean>
     fetchByParams: (
         data: QueryParams
     ) => Promise<KomposeSchemas.CategoryRawQuerySchema[]>
-    fetchAncestorsById: (
+    fetchLinkedListById: (
         categoryId: string
     ) => Promise<KomposeSchemas.CategoryRawQuerySchema[]>
     save: (

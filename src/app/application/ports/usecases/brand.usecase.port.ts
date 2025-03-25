@@ -1,7 +1,7 @@
 import {
     type ItemBrandProps,
     type ItemBrandRaw,
-} from '@app/domain/entities/item-brand.entity'
+} from '@app/domain/entities/brand.entity'
 import { type QueryParams } from '@core/application/models/app/app.model'
 
 export interface CreateItemBrandPort {

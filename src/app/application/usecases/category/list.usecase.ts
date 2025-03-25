@@ -2,12 +2,12 @@ import {
     CategoryEntity,
     type CategoryRaw,
 } from '@app/domain/entities/category.entity'
-import { type ItemCategoryRepositoryPort } from '../../ports/repositories/item-category.repository'
+import { type CategoryRepositoryPort } from '../../ports/repositories/category.repository'
 import { type ListCategoriesPort } from '../../ports/usecases/category.usecase.port'
 import { type QueryParams } from '@core/application/models/app/app.model'
 
 export class ListCategoriesUseCase implements ListCategoriesPort {
-    constructor(private readonly repository: ItemCategoryRepositoryPort) {}
+    constructor(private readonly repository: CategoryRepositoryPort) {}
 
     async run(data: QueryParams): Promise<CategoryRaw[]> {
         const categoriesRaw = await this.repository.fetchByParams(data)

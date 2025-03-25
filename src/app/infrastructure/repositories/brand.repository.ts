@@ -1,8 +1,8 @@
-import { type ItemBrandRepositoryPort } from '@app/application/ports/repositories/item-brand.repository'
+import { type BrandRepositoryPort } from '@app/application/ports/repositories/brand.repository'
 import {
     type ItemBrandProps,
     type ItemBrandRaw,
-} from '@app/domain/entities/item-brand.entity'
+} from '@app/domain/entities/brand.entity'
 import { type QueryParams } from '@core/application/models/app/app.model'
 import { type DatabaseCredentialModel } from '@core/application/models/db/database-credential.model'
 import { RepositoryErrorPresenter } from '@core/application/presenters/repository-error.presenter'
@@ -14,7 +14,7 @@ import {
 } from '@devnica/kompostia-models-ts'
 import { type Sequelize, Op } from 'sequelize'
 
-class ItemBrandRepository implements ItemBrandRepositoryPort {
+class BrandRepository implements BrandRepositoryPort {
     private readonly sequelize: Sequelize
     private readonly schema: string
 
@@ -101,6 +101,4 @@ class ItemBrandRepository implements ItemBrandRepositoryPort {
     }
 }
 
-export const itemBrandRepositoryImpl = new ItemBrandRepository(
-    getDatabaseCrendential()
-)
+export const brandRepositoryImpl = new BrandRepository(getDatabaseCrendential())

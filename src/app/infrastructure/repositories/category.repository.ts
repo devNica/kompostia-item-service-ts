@@ -1,4 +1,4 @@
-import { type ItemCategoryRepositoryPort } from '@app/application/ports/repositories/item-category.repository'
+import { type CategoryRepositoryPort } from '@app/application/ports/repositories/category.repository'
 import { type CtgItemDTO } from '@app/application/ports/usecases/catalog-item.usecase.port'
 import { type CategoryRaw } from '@app/domain/entities/category.entity'
 import { type QueryParams } from '@core/application/models/app/app.model'
@@ -13,7 +13,7 @@ import {
 } from '@devnica/kompostia-models-ts'
 import { QueryTypes, type Sequelize } from 'sequelize'
 
-class ItemCategoryRepository implements ItemCategoryRepositoryPort {
+class CategoryRepository implements CategoryRepositoryPort {
     private readonly sequelize: Sequelize
     private readonly schema: string
 
@@ -80,7 +80,7 @@ class ItemCategoryRepository implements ItemCategoryRepositoryPort {
         }
     }
 
-    async fetchAncestorsById(
+    async fetchLinkedListById(
         categoryId: string
     ): Promise<KomposeSchemas.CategoryRawQuerySchema[]> {
         try {
@@ -138,6 +138,6 @@ class ItemCategoryRepository implements ItemCategoryRepositoryPort {
     }
 }
 
-export const itemCategoryRepositoryImpl = new ItemCategoryRepository(
+export const categoryRepositoryImpl = new CategoryRepository(
     getDatabaseCrendential()
 )

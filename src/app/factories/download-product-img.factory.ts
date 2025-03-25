@@ -3,12 +3,7 @@ import { DownloadCtgImageUseCase } from '@app/application/usecases/download-prod
 import { ProductFileRepositoryPortmpl } from '@app/infrastructure/repositories/product-file.repository'
 import { type ControllerPort } from '@core/application/ports/controller.port'
 
-function factory(): ControllerPort<
-    Buffer,
-    {
-        params: { fileId: string }
-    }
-> {
+function factory(): ControllerPort {
     const usecase = new DownloadCtgImageUseCase(ProductFileRepositoryPortmpl)
     return new DownloadCtgImageController(usecase)
 }

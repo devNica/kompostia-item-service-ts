@@ -1,13 +1,13 @@
 import {
     ItemBrandEntity,
     type ItemBrandRaw,
-} from '@app/domain/entities/item-brand.entity'
+} from '@app/domain/entities/brand.entity'
 import { type QueryParams } from '@core/application/models/app/app.model'
-import { type ListBrandsItemsPort } from '../../ports/usecases/item-brand.usecase.port'
-import { type ItemBrandRepositoryPort } from '../../ports/repositories/item-brand.repository'
+import { type ListBrandsItemsPort } from '../../ports/usecases/brand.usecase.port'
+import { type BrandRepositoryPort } from '../../ports/repositories/brand.repository'
 
 export class ListBrandsItemsUseCase implements ListBrandsItemsPort {
-    constructor(private readonly repository: ItemBrandRepositoryPort) {}
+    constructor(private readonly repository: BrandRepositoryPort) {}
 
     async run(data: QueryParams): Promise<ItemBrandRaw[]> {
         const brandsFound = await this.repository.fetchByParams(data)

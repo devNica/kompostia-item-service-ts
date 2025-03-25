@@ -1,8 +1,8 @@
 import { type SupplierProps } from '@app/domain/entities/supplier.entity'
-import { type NestedLocationRaw } from '@app/domain/entities/location-linked-list.entity'
+import { type LocationLinkedListRaw } from '@app/domain/entities/location-linked-list.entity'
 import { type FileModel } from '@core/application/models/files/file.model'
-import { type NestedCategoryRaw } from '@app/domain/entities/nested-category.entity'
-import { type ItemBrandRaw } from '@app/domain/entities/item-brand.entity'
+import { type CategoryLinkedListRaw } from '@app/domain/entities/category-linked-list.entity'
+import { type ItemBrandRaw } from '@app/domain/entities/brand.entity'
 import { type CtgItemRaw } from '@app/domain/aggregates/catalog-item.aggregate'
 
 export interface CtgItemDTO {
@@ -14,8 +14,8 @@ export interface CtgItemDTO {
     supplierProductName: string
     supplierProductCode: string
     brand: ItemBrandRaw
-    category: NestedCategoryRaw
-    location?: NestedLocationRaw
+    category: CategoryLinkedListRaw
+    location?: LocationLinkedListRaw
     reference: string
     createdAt: number
     isActive: boolean

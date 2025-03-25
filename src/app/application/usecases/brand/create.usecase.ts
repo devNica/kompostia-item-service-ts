@@ -2,12 +2,12 @@ import {
     ItemBrandEntity,
     type ItemBrandProps,
     type ItemBrandRaw,
-} from '@app/domain/entities/item-brand.entity'
-import { type CreateItemBrandPort } from '../../ports/usecases/item-brand.usecase.port'
-import { type ItemBrandRepositoryPort } from '../../ports/repositories/item-brand.repository'
+} from '@app/domain/entities/brand.entity'
+import { type CreateItemBrandPort } from '../../ports/usecases/brand.usecase.port'
+import { type BrandRepositoryPort } from '../../ports/repositories/brand.repository'
 
 export class CreateItemBrandUseCase implements CreateItemBrandPort {
-    constructor(private readonly repository: ItemBrandRepositoryPort) {}
+    constructor(private readonly repository: BrandRepositoryPort) {}
 
     async run(data: ItemBrandProps): Promise<ItemBrandRaw> {
         const itemBrandEntity = ItemBrandEntity.new(data)

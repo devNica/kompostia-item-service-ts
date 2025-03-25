@@ -3,7 +3,7 @@ import {
     getObjetcKeyPath,
 } from '@core/shared/utils/object.utils'
 import {
-    StorageLocationNodeProps,
+    type StorageLocationNodeProps,
     StorageLocationNodeVO,
 } from '../value-objects/storage-location-node.vo'
 import { UniqueIdentificatorVO } from '@core/domain/value-objects/unique-identificator.vo'

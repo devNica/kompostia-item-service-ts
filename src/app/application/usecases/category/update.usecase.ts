@@ -4,10 +4,10 @@ import {
     type CategoryRaw,
 } from '@app/domain/entities/category.entity'
 import { type UpdateCategoryPort } from '../../ports/usecases/category.usecase.port'
-import { type ItemCategoryRepositoryPort } from '../../ports/repositories/item-category.repository'
+import { type CategoryRepositoryPort } from '../../ports/repositories/category.repository'
 
 export class UpdateCategoryUseCase implements UpdateCategoryPort {
-    constructor(private readonly repository: ItemCategoryRepositoryPort) {}
+    constructor(private readonly repository: CategoryRepositoryPort) {}
 
     async run(data: CategoryProps, categoryId: string): Promise<CategoryRaw> {
         const ctg = CategoryEntity.create({

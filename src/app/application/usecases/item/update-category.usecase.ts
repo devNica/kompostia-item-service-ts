@@ -1,18 +1,18 @@
-import { NestedCategoryEntity } from '@app/domain/entities/nested-category.entity'
+import { CategoryLinkedListEntity } from '@app/domain/entities/category-linked-list.entity'
 import {
     type CtgItemDTO,
     type UpdateCtgItemCategoryPort,
 } from '../../ports/usecases/catalog-item.usecase.port'
 import { type CatalogItemRepositoryport } from '../../ports/repositories/catalog-item.repository'
 import {
-    mapCategoryTreeToAggregateProps,
-    mapLocationTreeToAggregateProps,
+    mapFromRawCategoriesToNode,
+    mapFromRawLocationToNode,
 } from '../../services/mappers/shared-mapper'
 import {
     CtgItemAggregateRoot,
     type CtgItemRaw,
 } from '@app/domain/aggregates/catalog-item.aggregate'
-import { type LocationNodeProps } from '@app/domain/value-objects/storage-location-node.vo'
+import { type StorageLocationNodeProps } from '@app/domain/value-objects/storage-location-node.vo'
 
 export class UpdateCatalogItemCategoryUseCase
     implements UpdateCtgItemCategoryPort
@@ -23,7 +23,7 @@ export class UpdateCatalogItemCategoryUseCase
         data: Pick<CtgItemDTO, 'category'>,
         itemId: string
     ): Promise<CtgItemRaw> {
-        const ctg = NestedCategoryEntity.new(data.category)
+        const ctg = CategoryLinkedListEntity.new(data.category)
 
         const category = ctg.getAllProps()
 
@@ -34,16 +34,12 @@ export class UpdateCatalogItemCategoryUseCase
 
         const product = await this.repository.fetchById(itemId)
 
-        const categoryNested = mapCategoryTreeToAggregateProps(
-            product.categoryRaw
-        )
+        const categoryNested = mapFromRawCategoriesToNode(product.categoryRaw)
 
-        let nestedLocations: LocationNodeProps | null = null
+        let nestedLocations: StorageLocationNodeProps | null = null
 
         if (product.locationRaw.length > 0) {
-            nestedLocations = mapLocationTreeToAggregateProps(
-                product.locationRaw
-            )
+            nestedLocations = mapFromRawLocationToNode(product.locationRaw)
         }
 
         const po = CtgItemAggregateRoot.fromRawData({
