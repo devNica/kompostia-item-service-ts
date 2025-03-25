@@ -86,7 +86,9 @@ class ItemCategoryRepository implements ItemCategoryRepositoryPort {
         try {
             const result =
                 await this.sequelize.query<KomposeSchemas.CategoryRawQuerySchema>(
-                    KomposeQueries.hierarchicalCategoryRelationshipSQL(this.schema),
+                    KomposeQueries.hierarchicalCategoryRelationshipSQL(
+                        this.schema
+                    ),
                     {
                         replacements: {
                             categoryId,
@@ -116,10 +118,7 @@ class ItemCategoryRepository implements ItemCategoryRepositoryPort {
         try {
             const categoriesFound =
                 await this.sequelize.query<KomposeSchemas.CategoryRawQuerySchema>(
-                    KomposeQueries.registeredCategoriesSQL(
-                        this.schema,
-                        query
-                    ),
+                    KomposeQueries.registeredCategoriesSQL(this.schema, query),
                     {
                         type: QueryTypes.SELECT,
                     }

@@ -27,7 +27,10 @@ export class NestedCategoryEntity extends BaseEntity<NestedCategoryProps> {
         const path = ChildNodeCategoryVO.create(data.path)
 
         // Obtener el Id de la referencia ultima de la ubicacion del producto
-        const [locationId] = findDeepestId(data.path, { filterKey: "categoryId", depth: 0 })
+        const [locationId] = findDeepestId(data.path, {
+            filterKey: 'categoryId',
+            depth: 0,
+        })
 
         return new NestedCategoryEntity(
             {

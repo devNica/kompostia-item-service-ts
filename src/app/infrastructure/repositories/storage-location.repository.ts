@@ -87,7 +87,9 @@ class StorageLocationRepository implements StorageLocationRepositoryPort {
         }
     }
 
-    async fetchLocationTypeyId(locationTypeId: string): Promise<LocationTypeRaw> {
+    async fetchLocationTypeyId(
+        locationTypeId: string
+    ): Promise<LocationTypeRaw> {
         try {
             const result =
                 await KomposeModels.LocationTypeModel.findByPk(locationTypeId)
@@ -116,7 +118,6 @@ class StorageLocationRepository implements StorageLocationRepositoryPort {
         data: Omit<StorageLocationRaw, 'locationId'> & { locationId: string }
     ): Promise<void> {
         try {
-
             await KomposeModels.StorageLocationModel.update(
                 {
                     locationName: data.locationName,
@@ -141,13 +142,15 @@ class StorageLocationRepository implements StorageLocationRepositoryPort {
         }
     }
 
-    async fetchAncestorsById(
+    async fetchLinkedListById(
         locationId: string
     ): Promise<KomposeSchemas.StorageLocationRawQuerySchema[]> {
         try {
             const result =
                 await this.sequelize.query<KomposeSchemas.StorageLocationRawQuerySchema>(
-                    KomposeQueries.hierarchicalLocationRelationshipSQL(this.schema),
+                    KomposeQueries.hierarchicalLocationRelationshipSQL(
+                        this.schema
+                    ),
                     {
                         replacements: {
                             locationId,

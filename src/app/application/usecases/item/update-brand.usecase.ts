@@ -11,7 +11,7 @@ import {
     mapCategoryTreeToAggregateProps,
     mapLocationTreeToAggregateProps,
 } from '../../services/mappers/shared-mapper'
-import { type LocationNodeProps } from '@app/domain/value-objects/child-node-location.vo'
+import { type LocationNodeProps } from '@app/domain/value-objects/storage-location-node.vo'
 
 export class UpdateCatalogItemBrandUseCase implements UpdateCtgItemBrandPort {
     constructor(private readonly repository: CatalogItemRepositoryport) {}

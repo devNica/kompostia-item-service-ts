@@ -12,7 +12,7 @@ import {
     CtgItemAggregateRoot,
     type CtgItemRaw,
 } from '@app/domain/aggregates/catalog-item.aggregate'
-import { type LocationNodeProps } from '@app/domain/value-objects/child-node-location.vo'
+import { type LocationNodeProps } from '@app/domain/value-objects/storage-location-node.vo'
 
 export class UpdateCatalogItemCategoryUseCase
     implements UpdateCtgItemCategoryPort

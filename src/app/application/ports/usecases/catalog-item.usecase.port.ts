@@ -1,5 +1,5 @@
 import { type SupplierProps } from '@app/domain/entities/supplier.entity'
-import { type NestedLocationRaw } from '@app/domain/entities/nested-location.entity'
+import { type NestedLocationRaw } from '@app/domain/entities/location-linked-list.entity'
 import { type FileModel } from '@core/application/models/files/file.model'
 import { type NestedCategoryRaw } from '@app/domain/entities/nested-category.entity'
 import { type ItemBrandRaw } from '@app/domain/entities/item-brand.entity'

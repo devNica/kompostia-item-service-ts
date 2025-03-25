@@ -1,15 +1,15 @@
 import { type ProductImgRaw } from '@app/domain/entities/product-img.entity'
 import { type CtgItemRaw } from '@app/domain/aggregates/catalog-item.aggregate'
 import { type ItemBrandRaw } from '@app/domain/entities/item-brand.entity'
-import { type KomposeInterfaces } from '@devnica/kompostia-models-ts'
+import { type KomposeSchemas } from '@devnica/kompostia-models-ts'
 
 export type CtgItemFoundI = Omit<
     CtgItemRaw,
     'category' | 'location' | 'urls' | 'mask'
 > & {
     id: string
-    categoryRaw: KomposeInterfaces.CategoryStructureRawI[]
-    locationRaw: KomposeInterfaces.StorageLocationStructureRawI[]
+    categoryRaw: KomposeSchemas.CategoryRawQuerySchema[]
+    locationRaw: KomposeSchemas.StorageLocationRawQuerySchema[]
     imgMetaData: ImageMetaDataI[] | undefined
 }
 

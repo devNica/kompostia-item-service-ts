@@ -12,7 +12,7 @@ export interface StorageLocationRepositoryPort {
     fetchByParams: (
         data: QueryParams
     ) => Promise<KomposeSchemas.StorageLocationRawQuerySchema[]>
-    fetchAncestorsById: (
+    fetchLinkedListById: (
         locationId: string
     ) => Promise<KomposeSchemas.StorageLocationRawQuerySchema[]>
     updateById: (

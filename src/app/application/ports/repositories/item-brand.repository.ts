@@ -3,14 +3,14 @@ import {
     type ItemBrandRaw,
 } from '@app/domain/entities/item-brand.entity'
 import { type QueryParams } from '@core/application/models/app/app.model'
-import { type KomposeInterfaces } from '@devnica/kompostia-models-ts'
+import { type KomposeSchemas } from '@devnica/kompostia-models-ts'
 
 export interface ItemBrandRepositoryPort {
     save: (
         data: ItemBrandProps
-    ) => Promise<Omit<KomposeInterfaces.ItemBrandI, 'createdAt' | 'updatedAt'>>
+    ) => Promise<Omit<KomposeSchemas.ItemBrandSchema, 'createdAt' | 'updatedAt'>>
     fetchByParams: (
         data: QueryParams
-    ) => Promise<KomposeInterfaces.ItemBrandI[]>
+    ) => Promise<KomposeSchemas.ItemBrandSchema[]>
     updateById: (data: ItemBrandRaw) => Promise<void>
 }

@@ -1,6 +1,6 @@
 import { ExpressServerAdapter } from '@core/infrastructure/express/express-server-adapter'
 import { WinstonLoggerAdapter } from '@core/shared/winston/winston.adapter'
-import { OpenTelemetryAdapter } from '@core/infrastructure/otlp/otlp.adapter'
+// import { OpenTelemetryAdapter } from '@core/infrastructure/otlp/otlp.adapter'
 import constants from '@core/shared/constants'
 import { dbConnectionAdapter } from '@core/infrastructure/db/db.adapter'
 import { getDatabaseCrendential } from '@core/shared/configs/db-credentials'

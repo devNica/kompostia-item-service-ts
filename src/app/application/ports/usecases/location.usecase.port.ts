@@ -1,4 +1,4 @@
-import { type NestedLocationRaw } from '@app/domain/entities/nested-location.entity'
+import { type LocationLinkedListRaw } from '@app/domain/entities/location-linked-list.entity'
 import { type StorageLocationRaw } from '@app/domain/entities/storage-location.entity'
 
 import { type QueryParams } from '@core/application/models/app/app.model'
@@ -20,8 +20,8 @@ export interface ListStorageLocationsPort {
     run: (data: QueryParams) => Promise<StorageLocationRaw[]>
 }
 
-export interface GetLocationAncestorsPort {
-    run: (locationId: string) => Promise<NestedLocationRaw>
+export interface GetLocationLinkedListPort {
+    run: (locationId: string) => Promise<LocationLinkedListRaw>
 }
 
 export interface UpdateStorageLocationPort {

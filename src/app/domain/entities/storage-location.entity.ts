@@ -2,7 +2,7 @@ import { DomainErrorPresenter } from '@core/application/presenters/domain-error.
 import { BaseEntity } from '@core/domain/entities/base.entity'
 import { UniqueIdentificatorVO } from '@core/domain/value-objects/unique-identificator.vo'
 import { hasRequiredKey } from '@core/shared/utils/validator'
-import { KomposeSchemas } from '@devnica/kompostia-models-ts'
+import { type KomposeSchemas } from '@devnica/kompostia-models-ts'
 
 export interface LocationTypeRaw {
     locationTypeId: string

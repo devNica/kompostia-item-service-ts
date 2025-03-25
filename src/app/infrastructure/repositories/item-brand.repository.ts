@@ -78,7 +78,9 @@ class ItemBrandRepository implements ItemBrandRepositoryPort {
 
     async save(
         data: ItemBrandProps
-    ): Promise<Omit<KomposeSchemas.ItemBrandSchema, 'createdAt' | 'updatedAt'>> {
+    ): Promise<
+        Omit<KomposeSchemas.ItemBrandSchema, 'createdAt' | 'updatedAt'>
+    > {
         try {
             const brand = await KomposeModels.ItemBrandModel.create({
                 brandName: data.brandName,

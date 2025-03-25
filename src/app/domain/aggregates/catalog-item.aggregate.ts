@@ -2,9 +2,9 @@ import { BaseEntity } from '@core/domain/entities/base.entity'
 import { type LinkProps, LinkVO } from '../value-objects/link.vo'
 import { DateVO } from '../value-objects/date.vo'
 import {
-    NestedLocationEntity,
-    type NestedLocationRaw,
-} from '../entities/nested-location.entity'
+    LocationLinkedListEntity,
+    LocationLinkedListRaw,
+} from '../entities/location-linked-list.entity'
 import { UniqueIdentificatorVO } from '@core/domain/value-objects/unique-identificator.vo'
 import { hasRequiredKey } from '@core/shared/utils/validator'
 import { SupplierEntity, type SupplierProps } from '../entities/supplier.entity'
@@ -31,7 +31,7 @@ export interface CtgItemProps {
     brand: ItemBrandEntity
     category: NestedCategoryEntity
     urls?: LinkVO[] // product url images
-    location?: NestedLocationEntity
+    location?: LocationLinkedListEntity
     createdAt: DateVO // fecha de creacion del articulo
     isActive: boolean
 }
@@ -53,7 +53,7 @@ export type CtgItemRaw = Omit<
     brand: ItemBrandRaw
     supplier: SupplierProps
     category: NestedCategoryRaw
-    location?: NestedLocationRaw
+    location?: LocationLinkedListRaw
 
     createdAt: number
     urls?: LinkProps[] | undefined
@@ -68,11 +68,11 @@ export class CtgItemAggregateRoot extends BaseEntity<CtgItemProps> {
         const itemId = new UniqueIdentificatorVO(data.itemId)
 
         let urls: LinkVO[] | undefined
-        let location: NestedLocationEntity | undefined
+        let location: LocationLinkedListEntity | undefined
 
         /** Validar que clave "location" este definida y que el atributo path del objeto no sea nulo */
         if (hasRequiredKey(data, 'location') && data.location.path) {
-            location = NestedLocationEntity.new(data.location)
+            location = LocationLinkedListEntity.new(data.location)
         }
 
         if (hasRequiredKey(data, 'urls')) {

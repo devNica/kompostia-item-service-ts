@@ -5,7 +5,10 @@ import { itemCategoryRepositoryImpl } from '@app/infrastructure/repositories/ite
 import { type ControllerPort } from '@core/application/ports/controller.port'
 import { SuccessRequestPresenter } from '@core/application/presenters/success-request.presenter'
 
-function factory(): ControllerPort {
+function factory(): ControllerPort<
+    NestedCategoryRaw,
+    { params: { categoryId: string } }
+> {
     const usecase = new GetCategoryAncestorsUseCase(itemCategoryRepositoryImpl)
 
     const presenter = new SuccessRequestPresenter<NestedCategoryRaw>()

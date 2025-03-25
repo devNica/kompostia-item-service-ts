@@ -137,8 +137,7 @@ class CatalogItemRepository implements CatalogItemRepositoryport {
 
             const product = unwrapData(productRaw)
 
-            let locationRaw: KomposeSchemas.StorageLocationRawQuerySchema[] =
-                []
+            let locationRaw: KomposeSchemas.StorageLocationRawQuerySchema[] = []
 
             if (
                 product?.productLocation &&
@@ -161,7 +160,9 @@ class CatalogItemRepository implements CatalogItemRepositoryport {
 
             const categoryRaw =
                 await this.sequelize.query<KomposeSchemas.CategoryRawQuerySchema>(
-                    KomposeQueries.hierarchicalCategoryRelationshipSQL(this.schema),
+                    KomposeQueries.hierarchicalCategoryRelationshipSQL(
+                        this.schema
+                    ),
                     {
                         replacements: {
                             categoryId: product?.categoryId,

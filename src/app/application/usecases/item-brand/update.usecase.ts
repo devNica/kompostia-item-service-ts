@@ -15,7 +15,7 @@ export class UpdateBrandInformationUseCase
         const brandsEntity = ItemBrandEntity.new({
             brandId,
             brandName: data.brandName,
-            isActive: data.isActive
+            isActive: data.isActive,
         })
 
         const brands = brandsEntity.getAllProps()

@@ -1,30 +1,30 @@
 import { BaseEntity } from '@core/domain/entities/base.entity'
 import { UniqueIdentificatorVO } from '@core/domain/value-objects/unique-identificator.vo'
 
-export interface LocationNodeProps {
+export interface StorageLocationNodeProps {
     locationId?: string
-    locationName: string // nombre del almacen
+    locationName: string
     nomeclature: string
-    parentId: string // ref == parentId
+    parentId: string 
     type: string
-    path?: LocationNodeProps | undefined
+    path?: StorageLocationNodeProps | undefined
 }
 
-export class ChildNodeLocationVO extends BaseEntity<LocationNodeProps> {
+export class StorageLocationNodeVO extends BaseEntity<StorageLocationNodeProps> {
     private constructor(
-        props: LocationNodeProps,
+        props: StorageLocationNodeProps,
         locationId: UniqueIdentificatorVO
     ) {
         super(props, locationId)
     }
 
-    static fromRawData(data: LocationNodeProps): ChildNodeLocationVO {
+    static fromRawData(data: StorageLocationNodeProps): StorageLocationNodeVO {
         const locationId = new UniqueIdentificatorVO(data.locationId)
 
         // Validar y clonar childrens (manteniendo la estructura simple)
         const childrens = data.path ? { ...data.path } : undefined
 
-        return new ChildNodeLocationVO(
+        return new StorageLocationNodeVO(
             {
                 ...data,
                 path: childrens,
@@ -33,7 +33,7 @@ export class ChildNodeLocationVO extends BaseEntity<LocationNodeProps> {
         )
     }
 
-    getAllProps(): LocationNodeProps {
+    getAllProps(): StorageLocationNodeProps {
         return {
             locationId: this.props.locationId,
             locationName: this.props.locationName,

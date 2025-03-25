@@ -3,7 +3,7 @@ import { type CategoryNodeProps } from '@app/domain/value-objects/child-node-cat
 import { type LinkProps } from '@app/domain/value-objects/link.vo'
 import constants from '@core/shared/constants'
 import { type KomposeSchemas } from '@devnica/kompostia-models-ts'
-import { type LocationNodeProps } from '@app/domain/value-objects/child-node-location.vo'
+import { type LocationNodeProps } from '@app/domain/value-objects/storage-location-node.vo'
 
 export function mapFromRawLocationToNode(
     data: KomposeSchemas.StorageLocationRawQuerySchema[]

@@ -8,13 +8,11 @@ import {
     type GetCtgItemPort,
 } from '../../ports/usecases/catalog-item.usecase.port'
 import {
-
     mapFromRawCategoriesToNode,
     mapFromRawLocationToNode,
     mapImageMetadataToURL,
-    
 } from '../../services/mappers/shared-mapper'
-import { type LocationNodeProps } from '@app/domain/value-objects/child-node-location.vo'
+import { type LocationNodeProps } from '@app/domain/value-objects/storage-location-node.vo'
 
 export class GetCatalogItemUseCase implements GetCtgItemPort {
     constructor(private readonly repository: CatalogItemRepositoryport) {}
@@ -32,9 +30,7 @@ export class GetCatalogItemUseCase implements GetCtgItemPort {
         let nestedLocations: LocationNodeProps | null = null
 
         if (itemFound.locationRaw.length > 0) {
-            nestedLocations = mapFromRawLocationToNode(
-                itemFound.locationRaw
-            )
+            nestedLocations = mapFromRawLocationToNode(itemFound.locationRaw)
         }
 
         const imgURL = mapImageMetadataToURL(itemFound.imgMetaData, baseURL)

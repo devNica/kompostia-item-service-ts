@@ -1,7 +1,6 @@
 import { type ControllerPort } from '@core/application/ports/controller.port'
 import { type PresenterPort } from '@core/application/ports/presenter.port'
 import {
-    type HttpRequestModel,
     type HttpResponseModel,
 } from '@core/application/models/http/http'
 import { hasRequiredKey } from '@core/shared/utils/validator'
