@@ -42,7 +42,7 @@ export class UpdateCatalogItemCategoryUseCase
             nestedLocations = mapFromRawLocationToNode(product.locationRaw)
         }
 
-        const po = CtgItemAggregateRoot.fromRawData({
+        const po = CtgItemAggregateRoot.create({
             ...product,
             category: {
                 categoryId: '',
@@ -56,6 +56,6 @@ export class UpdateCatalogItemCategoryUseCase
             mask: 'UUUUUU',
         })
 
-        return po.toResponse()
+        return po.getAllProps()
     }
 }

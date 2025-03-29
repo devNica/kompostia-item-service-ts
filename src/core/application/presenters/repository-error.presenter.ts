@@ -6,7 +6,7 @@ export class RepositoryErrorPresenter extends AppError {
         super(
             message,
             HttpResponseCode.notFound,
-            `Recurso no encontrado: ${ref}`
+            ref
         )
     }
 }

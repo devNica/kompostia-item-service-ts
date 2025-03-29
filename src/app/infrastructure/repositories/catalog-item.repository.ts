@@ -27,6 +27,7 @@ import { unwrapData } from '@core/shared/utils/object.utils'
 import { type CtgItemRaw } from '@app/domain/aggregates/catalog-item.aggregate'
 import { RepositoryErrorPresenter } from '@core/application/presenters/repository-error.presenter'
 import { type ItemBrandRaw } from '@app/domain/entities/brand.entity'
+import { MakeOptional } from '@core/application/models/app/app.model'
 
 class CatalogItemRepository implements CatalogItemRepositoryport {
     private readonly sequelize: Sequelize
@@ -211,9 +212,7 @@ class CatalogItemRepository implements CatalogItemRepositoryport {
     }
 
     async save(
-        attr: Omit<CtgItemRaw, 'brand'> & {
-            brand: Required<ItemBrandRaw>
-        },
+        attr: MakeOptional<CtgItemRaw,'itemId'>,
         images?: ProductImgRaw[]
     ): Promise<{ productId: string }> {
         let product: KomposeSchemas.CatalogItemSchema

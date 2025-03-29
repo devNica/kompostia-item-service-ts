@@ -1,7 +1,7 @@
 import { type ProductImgRaw } from '@app/domain/entities/product-img.entity'
 import { type CtgItemRaw } from '@app/domain/aggregates/catalog-item.aggregate'
-import { type ItemBrandRaw } from '@app/domain/entities/brand.entity'
 import { type KomposeSchemas } from '@devnica/kompostia-models-ts'
+import { MakeOptional } from '@core/application/models/app/app.model'
 
 export type CtgItemFoundI = Omit<
     CtgItemRaw,
@@ -21,9 +21,7 @@ export interface ImageMetaDataI {
 
 export interface CatalogItemRepositoryport {
     save: (
-        product: Omit<CtgItemRaw, 'brand'> & {
-            brand: Required<ItemBrandRaw>
-        },
+        product: MakeOptional<CtgItemRaw, 'itemId'>,
         images?: ProductImgRaw[]
     ) => Promise<{ productId: string }>
 

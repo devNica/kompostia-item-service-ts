@@ -17,11 +17,13 @@ export class UpdateCatalogItemBrandUseCase implements UpdateCtgItemBrandPort {
     constructor(private readonly repository: CatalogItemRepositoryport) {}
 
     async run(data: UpdCtgItemBrandDTO, itemId: string): Promise<CtgItemRaw> {
+        
+        // Actualizar la marca del articulo
         await this.repository.updateCtgItemBrandById({
             brandId: data.brandId,
             itemId,
         })
-
+        // Consular el Producto para recuperar la informacion actualizada de sus propiedades
         const product = await this.repository.fetchById(itemId)
 
         const nestedCategories = mapFromRawCategoriesToNode(product.categoryRaw)
@@ -32,7 +34,7 @@ export class UpdateCatalogItemBrandUseCase implements UpdateCtgItemBrandPort {
             nestedLocations = mapFromRawLocationToNode(product.locationRaw)
         }
 
-        const po = CtgItemAggregateRoot.fromRawData({
+        const po = CtgItemAggregateRoot.create({
             ...product,
             category: {
                 categoryId: '',
@@ -46,6 +48,6 @@ export class UpdateCatalogItemBrandUseCase implements UpdateCtgItemBrandPort {
             mask: 'UUUUUU',
         })
 
-        return po.toResponse()
+        return po.getAllProps()
     }
 }

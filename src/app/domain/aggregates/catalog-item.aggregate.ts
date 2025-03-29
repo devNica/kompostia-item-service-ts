@@ -15,6 +15,7 @@ import {
     type CategoryLinkedListRaw,
 } from '../entities/category-linked-list.entity'
 import { ItemBrandEntity, type ItemBrandRaw } from '../entities/brand.entity'
+import { MakeOptional } from '@core/application/models/app/app.model'
 
 export interface CtgItemProps {
     itemName: string
@@ -61,7 +62,7 @@ export class CtgItemAggregateRoot extends BaseEntity<CtgItemProps> {
         super(props, itemId)
     }
 
-    static fromRawData(data: CtgItemRaw): CtgItemAggregateRoot {
+    static create(data: CtgItemRaw): CtgItemAggregateRoot {
         const itemId = new UniqueIdentificatorVO(data.itemId)
 
         let urls: LinkVO[] | undefined
@@ -98,30 +99,7 @@ export class CtgItemAggregateRoot extends BaseEntity<CtgItemProps> {
         )
     }
 
-    toRawData(): Omit<CtgItemRaw, 'itemId'> {
-        return {
-            itemName: this.props.itemName,
-            description: this.props.description,
-            reference: this.props.reference,
-            sku: this.props.sku.value,
-            mask: this.props.mask.value,
-            supplierProductName: this.props.supplierProductName,
-            supplierProductCode: this.props.supplierProductCode,
-            supplier: {
-                supplierId: this.props.supplier.getId(),
-            },
-            brand: this.props.brand.getAllProps(),
-            category: this.props.category.getAllProps(),
-            location: this.props.location?.getAllProps(),
-            isActive: this.props.isActive,
-            createdAt: this.props.createdAt.toSeconds(),
-            urls: this.props.urls
-                ? this.props.urls.map((ele) => ele.getAllProps())
-                : undefined,
-        }
-    }
-
-    toResponse(): CtgItemRaw {
+    getAllProps(): MakeOptional<CtgItemRaw,'itemId'> {
         return {
             itemName: this.props.itemName,
             description: this.props.description,

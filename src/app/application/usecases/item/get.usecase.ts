@@ -35,7 +35,7 @@ export class GetCatalogItemUseCase implements GetCtgItemPort {
 
         const imgURL = mapImageMetadataToURL(itemFound.imgMetaData, baseURL)
 
-        const po = CtgItemAggregateRoot.fromRawData({
+        const po = CtgItemAggregateRoot.create({
             ...itemFound,
             category: {
                 categoryId: '',
@@ -50,6 +50,6 @@ export class GetCatalogItemUseCase implements GetCtgItemPort {
             mask: 'UUUUUU',
         })
 
-        return po.toResponse()
+        return po.getAllProps()
     }
 }

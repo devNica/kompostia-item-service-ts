@@ -1,13 +1,17 @@
+import { DomainErrorPresenter } from '@core/application/presenters/domain-error.presenter'
 import { BaseEntity } from '@core/domain/entities/base.entity'
 import { UniqueIdentificatorVO } from '@core/domain/value-objects/unique-identificator.vo'
 
 export interface SupplierProps {
-    supplierId: string
-    supplierCode?: string
-    supplierName?: string
+    supplierId?: string
+    supplierCode: string
+    supplierName: string
+    isActive?: boolean
 }
 
 export class SupplierEntity extends BaseEntity<SupplierProps> {
+    private _persistedId: boolean = false
+
     private constructor(
         props: SupplierProps,
         supplierId: UniqueIdentificatorVO
@@ -15,9 +19,8 @@ export class SupplierEntity extends BaseEntity<SupplierProps> {
         super(props, supplierId)
     }
 
-    static new(data: SupplierProps | undefined): SupplierEntity {
-        if (!data) throw new Error('Relacion de proveedor indefinida')
-
+    static new(data: SupplierProps): SupplierEntity {
+       
         return new SupplierEntity(
             data,
             new UniqueIdentificatorVO(data.supplierId)
@@ -33,6 +36,19 @@ export class SupplierEntity extends BaseEntity<SupplierProps> {
             supplierId: this.id._value,
             supplierCode: this.props.supplierCode,
             supplierName: this.props.supplierName,
+            isActive: this.props.isActive
         }
     }
+
+    setPersistentId(supplierId: string):void{
+            if (this._persistedId) {
+                throw new DomainErrorPresenter(
+                    'El ID del proveedor ya ha sido persistido y no puede cambiarse',
+                    'supplier-entity'
+                )
+            }
+    
+            this.id = new UniqueIdentificatorVO(supplierId)
+            this._persistedId = true
+        }
 }

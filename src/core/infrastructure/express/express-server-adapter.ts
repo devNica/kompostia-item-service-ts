@@ -16,6 +16,7 @@ import express, { type Application } from 'express'
 import https from 'https'
 import cors from 'cors'
 import fs from 'fs'
+import { supplierRouter } from '@app/presentation/supplier.routes'
 
 export class ExpressServerAdapter {
     private readonly controllers: EndPointModel[] = []
@@ -73,6 +74,11 @@ export class ExpressServerAdapter {
         this.controllers.push({
             path: `/${this.prefix}/categories`,
             controller: categoryRouter,
+        })
+
+        this.controllers.push({
+            path: `/${this.prefix}/suppliers`,
+            controller: supplierRouter,
         })
     }
 

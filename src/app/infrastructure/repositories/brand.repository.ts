@@ -47,7 +47,7 @@ class BrandRepository implements BrandRepositoryPort {
         } catch (error) {
             throw new RepositoryErrorPresenter(
                 String(error),
-                'Repositorio|UpdateBrandById'
+                'BrandRepository|UpdateById'
             )
         }
     }
@@ -71,7 +71,7 @@ class BrandRepository implements BrandRepositoryPort {
         } catch (error) {
             throw new RepositoryErrorPresenter(
                 String(error),
-                'Repositorio|FetchBrandsForProduct'
+                'BrandRepository|FetchByParams'
             )
         }
     }
@@ -95,7 +95,7 @@ class BrandRepository implements BrandRepositoryPort {
         } catch (error) {
             throw new RepositoryErrorPresenter(
                 String(error),
-                'Repositorio|SaveProductBrand'
+                'BrandRepository|Save'
             )
         }
     }
