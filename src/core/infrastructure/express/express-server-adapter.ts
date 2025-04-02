@@ -52,7 +52,7 @@ export class ExpressServerAdapter {
 
     private controllerRegister(): void {
         this.controllers.push({
-            path: `/${this.prefix}/ctgItem`,
+            path: `/${this.prefix}/items`,
             controller: catalogItemRouter,
         })
 

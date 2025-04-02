@@ -1,9 +1,9 @@
-import { type ProductFileRepositoryPort } from '@app/application/ports/repositories/product-file.repository'
+import { ItemFileRepositoryPort } from '@app/application/ports/repositories/item-file.repository'
 import { type ProductImgRaw } from '@app/domain/entities/product-img.entity'
 import { InternalServerErrorPresenter } from '@core/application/presenters/internal-server-error.presenter'
 import { KomposeModels } from '@devnica/kompostia-models-ts'
 
-class ProductFileRepository implements ProductFileRepositoryPort {
+class ItemFileRepository implements ItemFileRepositoryPort {
     async getImageById(fileId: string): Promise<ProductImgRaw> {
         try {
             const file = await KomposeModels.FileModel.findByPk(fileId)
@@ -22,4 +22,4 @@ class ProductFileRepository implements ProductFileRepositoryPort {
     }
 }
 
-export const ProductFileRepositoryPortmpl = new ProductFileRepository()
+export const itemFileRepositoryImpl = new ItemFileRepository()

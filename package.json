@@ -40,7 +40,7 @@
     "typescript": "^5.5.3"
   },
   "dependencies": {
-    "@devnica/kompostia-models-ts": "^1.0.1",
+    "@devnica/kompostia-models-ts": "^1.0.5",
     "@opentelemetry/api": "^1.9.0",
     "@opentelemetry/auto-instrumentations-node": "^0.56.0",
     "@opentelemetry/exporter-trace-otlp-grpc": "^0.57.2",

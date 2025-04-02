@@ -3,7 +3,7 @@ import { BaseEntity } from '@core/domain/entities/base.entity'
 import { UniqueIdentificatorVO } from '@core/domain/value-objects/unique-identificator.vo'
 
 export interface SupplierProps {
-    supplierId?: string
+    supplierId: string
     supplierCode: string
     supplierName: string
     isActive?: boolean

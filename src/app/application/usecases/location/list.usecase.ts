@@ -4,7 +4,7 @@ import {
 } from '@app/domain/entities/storage-location.entity'
 import { type QueryParams } from '@core/application/models/app/app.model'
 import { type ListStorageLocationsPort } from '../../ports/usecases/location.usecase.port'
-import { type StorageLocationRepositoryPort } from '../../ports/repositories/product-location.repository'
+import { type StorageLocationRepositoryPort } from '../../ports/repositories/storage-location.repository'
 
 export class ListStorageLocationsUseCase implements ListStorageLocationsPort {
     constructor(private readonly repository: StorageLocationRepositoryPort) {}

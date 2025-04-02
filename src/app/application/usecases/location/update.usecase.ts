@@ -7,7 +7,7 @@ import {
     type UpdateStorageLocationDTO,
     type UpdateStorageLocationPort,
 } from '../../ports/usecases/location.usecase.port'
-import { type StorageLocationRepositoryPort } from '../../ports/repositories/product-location.repository'
+import { type StorageLocationRepositoryPort } from '../../ports/repositories/storage-location.repository'
 
 export class UpdateStorageLocationUseCase implements UpdateStorageLocationPort {
     constructor(private readonly repository: StorageLocationRepositoryPort) {}

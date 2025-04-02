@@ -1,4 +1,4 @@
-import { type StorageLocationRepositoryPort } from '@app/application/ports/repositories/product-location.repository'
+import { type StorageLocationRepositoryPort } from '@app/application/ports/repositories/storage-location.repository'
 import {
     type LocationTypeRaw,
     type StorageLocationRaw,
@@ -148,7 +148,7 @@ class StorageLocationRepository implements StorageLocationRepositoryPort {
         try {
             const result =
                 await this.sequelize.query<KomposeSchemas.StorageLocationRawQuerySchema>(
-                    KomposeQueries.hierarchicalLocationRelationshipSQL(
+                    KomposeQueries.linkedListRegisteredLocationsSQL(
                         this.schema
                     ),
                     {

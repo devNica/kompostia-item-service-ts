@@ -4,7 +4,7 @@ import {
 } from '@app/domain/entities/location-linked-list.entity'
 import { type GetLocationLinkedListPort } from '../../ports/usecases/location.usecase.port'
 import { mapFromRawLocationToNode } from '../../services/mappers/shared-mapper'
-import { type StorageLocationRepositoryPort } from '../../ports/repositories/product-location.repository'
+import { type StorageLocationRepositoryPort } from '../../ports/repositories/storage-location.repository'
 
 export class GetLocationLinkedListUseCase implements GetLocationLinkedListPort {
     constructor(private readonly repository: StorageLocationRepositoryPort) {}

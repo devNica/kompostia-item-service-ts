@@ -7,7 +7,7 @@ import {
     type CreateStorageLocationDTO,
     type CreateStorageLocationPort,
 } from '../../ports/usecases/location.usecase.port'
-import { type StorageLocationRepositoryPort } from '../../ports/repositories/product-location.repository'
+import { type StorageLocationRepositoryPort } from '../../ports/repositories/storage-location.repository'
 
 export class CreateStorageLocationUseCase implements CreateStorageLocationPort {
     constructor(private readonly repository: StorageLocationRepositoryPort) {}

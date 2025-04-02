@@ -21,12 +21,12 @@ import {
     type Transaction,
     UniqueConstraintError,
     ValidationError,
+    ForeignKeyConstraintError
 } from 'sequelize'
 import { InternalServerErrorPresenter } from '@core/application/presenters/internal-server-error.presenter'
 import { unwrapData } from '@core/shared/utils/object.utils'
 import { type CtgItemRaw } from '@app/domain/aggregates/catalog-item.aggregate'
 import { RepositoryErrorPresenter } from '@core/application/presenters/repository-error.presenter'
-import { type ItemBrandRaw } from '@app/domain/entities/brand.entity'
 import { MakeOptional } from '@core/application/models/app/app.model'
 
 class CatalogItemRepository implements CatalogItemRepositoryport {
@@ -94,16 +94,16 @@ class CatalogItemRepository implements CatalogItemRepositoryport {
         }
     }
 
-    async fetchById(productId: string): Promise<CtgItemFoundI> {
+    async fetchById(itemId: string): Promise<CtgItemFoundI> {
         try {
-            const productRaw: Omit<
+            const itemRaw: Omit<
                 KomposeSchemas.CatalogItemSchema,
-                'brandId' | 'qualityId' | 'supplierId'
+                'brandId' | 'supplierId'
             > | null = await KomposeModels.CatalogItemModel.findByPk(
-                productId,
+                itemId,
                 {
                     attributes: {
-                        exclude: ['qualityId', 'brandId', 'supplierId'],
+                        exclude: ['brandId', 'supplierId'],
                     },
 
                     include: [
@@ -128,31 +128,32 @@ class CatalogItemRepository implements CatalogItemRepositoryport {
                         },
                         {
                             model: KomposeModels.ItemHasLocationModel,
-                            as: 'productLocation',
+                            as: KomposeModels.ModelRelationshipAliases
+                            .itemHasLocatiosn,
                         },
                     ],
                 }
             )
 
-            if (!productRaw) throw new Error('producto no encontrado')
+            if (!itemRaw) throw new Error('producto no encontrado')
 
-            const product = unwrapData(productRaw)
+            const item = unwrapData(itemRaw)
 
             let locationRaw: KomposeSchemas.StorageLocationRawQuerySchema[] = []
 
             if (
-                product?.productLocation &&
-                product.productLocation.length > 0
+                item?.itemHasLocations &&
+                item.itemHasLocations.length > 0
             ) {
                 locationRaw =
                     await this.sequelize.query<KomposeSchemas.StorageLocationRawQuerySchema>(
-                        KomposeQueries.hierarchicalLocationRelationshipSQL(
+                        KomposeQueries.linkedListRegisteredLocationsSQL(
                             this.schema
                         ),
                         {
                             replacements: {
                                 locationId:
-                                    product?.productLocation[0].locationId,
+                                    item?.itemHasLocations[0].locationId,
                             },
                             type: QueryTypes.SELECT,
                         }
@@ -161,12 +162,12 @@ class CatalogItemRepository implements CatalogItemRepositoryport {
 
             const categoryRaw =
                 await this.sequelize.query<KomposeSchemas.CategoryRawQuerySchema>(
-                    KomposeQueries.hierarchicalCategoryRelationshipSQL(
+                    KomposeQueries.linkedListRegisteredCategoriesSQL(
                         this.schema
                     ),
                     {
                         replacements: {
-                            categoryId: product?.categoryId,
+                            categoryId: item?.categoryId,
                         },
                         type: QueryTypes.SELECT,
                     }
@@ -176,31 +177,32 @@ class CatalogItemRepository implements CatalogItemRepositoryport {
                 Omit<KomposeSchemas.FileSchema, 'binary'>
             >(KomposeQueries.getProductImagesMetadataSQL(this.schema), {
                 replacements: {
-                    productId: product?.id,
+                    itemId: item?.id,
                 },
                 type: QueryTypes.SELECT,
             })
 
             return {
-                id: product.id,
-                itemName: product.productName,
-                reference: product.reference,
-                description: product.description,
-                supplierProductCode: product.supplierProductCode,
-                supplierProductName: product.supplierProductName,
-                sku: product.sku,
-                brand: product.productBrand,
-                supplier: product.productSupplier,
+                id: item.id,
+                itemName: item.itemName,
+                reference: item.reference,
+                description: item.description,
+                supplierProductCode: item.supplierItemCode,
+                supplierProductName: item.supplierItemName,
+                sku: item.sku,
+                brand: item.itemBrand,
+                supplier: item.itemSupplier,
                 categoryRaw,
                 locationRaw,
                 imgMetaData,
-                createdAt: Number(product.createdAt),
-                isActive: product.isActive,
-                updatedAt: product.updatedAt,
+                createdAt: Number(item.createdAt),
+                isActive: item.isActive,
+                updatedAt: item.updatedAt,
             } as CtgItemFoundI
         } catch (error) {
             if (
                 error instanceof QueryError ||
+                error instanceof ForeignKeyConstraintError ||
                 error instanceof ValidationError
             ) {
                 throw new RequestValidationErrorPresenter(
@@ -226,7 +228,7 @@ class CatalogItemRepository implements CatalogItemRepositoryport {
                 {
                     itemName: attr.itemName,
                     description: attr.description,
-                    reference: 'ref1',
+                    reference: Math.random().toString(),
                     sku: attr.sku,
                     supplierItemName: attr.supplierProductName,
                     supplierItemCode: attr.supplierProductCode,
@@ -283,12 +285,14 @@ class CatalogItemRepository implements CatalogItemRepositoryport {
         } catch (error) {
             if (
                 error instanceof UniqueConstraintError ||
+                error instanceof ForeignKeyConstraintError ||
                 error instanceof ValidationError
             ) {
                 throw new ConflictErrorPresenter(String(error))
             } else {
-                throw new RequestValidationErrorPresenter(
-                    'Creacion de Registro fallido'
+                throw new RepositoryErrorPresenter(
+                    'Creacion de Registro fallido',
+                    'Repositorio|CatalogItem'
                 )
             }
         }

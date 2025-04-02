@@ -20,7 +20,7 @@ export class CreateItemBrandController implements ControllerPort<ItemBrandRaw> {
 
     async handleRequest(
         request: Pick<HttpRequestModel, 'body'>
-    ): Promise<HttpResponseModel<ItemBrandProps>> {
+    ): Promise<HttpResponseModel<ItemBrandRaw>> {
         if (!hasRequiredKey(request, 'body')) {
             throw new RequestValidationErrorPresenter()
         }

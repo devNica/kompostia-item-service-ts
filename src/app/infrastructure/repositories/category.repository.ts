@@ -3,6 +3,7 @@ import { type CtgItemDTO } from '@app/application/ports/usecases/catalog-item.us
 import { type CategoryRaw } from '@app/domain/entities/category.entity'
 import { type QueryParams } from '@core/application/models/app/app.model'
 import { type DatabaseCredentialModel } from '@core/application/models/db/database-credential.model'
+import { ConflictErrorPresenter } from '@core/application/presenters/conflict-error-presenter'
 import { RepositoryErrorPresenter } from '@core/application/presenters/repository-error.presenter'
 import { getDatabaseCrendential } from '@core/shared/configs/db-credentials'
 import {
@@ -11,7 +12,7 @@ import {
     KomposeModels,
     KomposeQueries,
 } from '@devnica/kompostia-models-ts'
-import { QueryTypes, type Sequelize } from 'sequelize'
+import { ForeignKeyConstraintError, QueryTypes, UniqueConstraintError, ValidationError, type Sequelize } from 'sequelize'
 
 class CategoryRepository implements CategoryRepositoryPort {
     private readonly sequelize: Sequelize
@@ -49,10 +50,17 @@ class CategoryRepository implements CategoryRepositoryPort {
                 }
             )
         } catch (error) {
-            throw new RepositoryErrorPresenter(
-                String(error),
-                'Repositorio|Productprops'
-            )
+            if (
+                error instanceof ForeignKeyConstraintError ||
+                error instanceof ValidationError
+            ) {
+                throw new ConflictErrorPresenter(String(error))
+            } else {
+                throw new RepositoryErrorPresenter(
+                    'Actualizacion de Registro fallido',
+                    'Repositorio|Category'
+                )
+            }
         }
     }
 
@@ -73,10 +81,18 @@ class CategoryRepository implements CategoryRepositoryPort {
                 categoryId: category.id,
             }
         } catch (error) {
-            throw new RepositoryErrorPresenter(
-                String(error),
-                'Repositorio|Productprops'
-            )
+            if (
+                error instanceof UniqueConstraintError ||
+                error instanceof ForeignKeyConstraintError ||
+                error instanceof ValidationError
+            ) {
+                throw new ConflictErrorPresenter(String(error))
+            } else {
+                throw new RepositoryErrorPresenter(
+                    'Creacion de Registro fallido',
+                    'Repositorio|Category'
+                )
+            }
         }
     }
 
@@ -86,7 +102,7 @@ class CategoryRepository implements CategoryRepositoryPort {
         try {
             const result =
                 await this.sequelize.query<KomposeSchemas.CategoryRawQuerySchema>(
-                    KomposeQueries.hierarchicalCategoryRelationshipSQL(
+                    KomposeQueries.linkedListRegisteredCategoriesSQL(
                         this.schema
                     ),
                     {
